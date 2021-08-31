@@ -2,45 +2,30 @@
 *
 * Seminar 1 - task 1
 * Author: Alexander Lundqvist
-* Created: 03-09-2020
-* Last updated: 09-09-2020
+* Created: 30-08-2021
+* Last updated:
 *
 * Koden implementerar två sätt att läsa in en textsträng från användaren tills
 * en newline symbol upptäcks och sedan skriva ut strängen i omvänd ordning.
 *
 * Referenser
-* (https://stackoverflow.com/questions/1407461/putting-user-input-into-
-* char-array-c-programming)
-* Användes för att få fram hur man läser input från användaren och matar in i
-* en array.
 *
-* (https://stackoverflow.com/questions/31678511/reverse-a-string-recursively-in-
-* c-using-a-pointer-to-string-only)
-* Användes då författaren ej förstod sig på pointers i C.
 *******************************************************************************/
 
 #include <stdio.h>
 #include <string.h>
 
+/*
+* Rekursiv funktion som inverterar en char array i minnet (pointer)
+* genom att byta plats på entries.
+*/
+void recursive(char *array){
 
-void recursive(char *array, int first, int last){
-  // Rekursiv funktion som inverterar en char array i minnet (pointer)
-  // genom att byta plats på entries.
-
-
-  char temp; // Temporär variabel för byte
-
-  if(first >= last){ // Kollar ifall vi nått mitten av array.
-    return;
+  // Kollar ifall pointern är null
+  if (*array) {
+    recursive(array++);
+    printf("%c\n", *array); // Skriv ut dereferenserat värde vid pointern
   }
-
-
-  temp = *(array+first); // Lagrar värdet vid index [0] i temp
-  *(array+first) = *(array+last); // Byter plats på entries via pointers
-  *(array+last) = temp; //
-
-  // Kallar funktionen igen. Stegar fram från första entry och bakåt från sista.
-  recursive(array, ++first, --last);
 }
 
 
@@ -81,14 +66,18 @@ void iterative(){
 
 // Testfunktion för programmet. Testar varje funktion Genom anropning.
 int main(void){
-  char string1[1000];
+
+  char input[50];
+
   printf("\nTest av rekursiv funktion.\n\n");
   printf("Mata in en teckensträng:\n");
-  fgets(string1, 1000, stdin);
-  recursive(string1, 0, strlen(string1)-1);
+
+  fgets(input, sizeOf input, stdin);
+  recursive(input);
+
   printf("Den omvända teckensträngen är: %s\n",string1);
 
-  iterative();
+  //iterative();
 
   return 0;
 
