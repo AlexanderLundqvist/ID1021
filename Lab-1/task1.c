@@ -3,12 +3,15 @@
 * Seminar 1 - task 1
 * Author: Alexander Lundqvist
 * Created: 30-08-2021
-* Last updated:
 *
-* Koden implementerar två sätt att läsa in en textsträng från användaren tills
-* en newline symbol upptäcks och sedan skriva ut strängen i omvänd ordning.
+* Single file program that performs the task of taking in a string input and
+* then print out the characters in reverse order. It does this with two
+* different methods, an iterative function and a recursive function.
 *
-* Referenser
+* Time comlexity
+*
+*
+* Memory complexity
 *
 *******************************************************************************/
 
@@ -16,31 +19,28 @@
 #include <string.h>
 
 /*
-* Rekursiv funktion som inverterar en char array i minnet (pointer)
-* genom att byta plats på entries.
+* Recursive function that prints the characters in a char array in reverse with
+* the help of a pointer.
 */
 void recursive(char *array){
 
-  // Kollar ifall pointern är null
+  // Checks if the array pointer is null
   if (*array) {
     recursive(array++);
-    printf("%c\n", *array); // Skriv ut dereferenserat värde vid pointern
+    printf("%c\n", *array); // Dereference the value at the pointer then print
   }
 }
 
-
+/*
+* Iterative function that
+*
+*/
 void iterative(){
-  // Funktionen läser in från stdin och lägger in chars i en tom array
-  // av förbestämd storlek 10. Sedan skriver den ut så många chars som skrevs
-  // i omvänd orning, max 10.
 
   int entry;
   int i = 0;
   int amount = 0;
   char string2[10];
-
-  printf("\n\nTest av iterativ funktion. (10 bokstäver max)\n\n");
-  printf("Mata in en teckensträng:\n");
 
   entry = getchar(); // Hämtar en char från input streamen
   while((i < 10 ) && (entry != EOF)){
@@ -64,20 +64,30 @@ void iterative(){
   }
 }
 
-// Testfunktion för programmet. Testar varje funktion Genom anropning.
+/*
+*
+*
+*/
 int main(void){
 
-  char input[50];
+  char input_1[100]; // For recursive function
+  char input_2[10]; // For iterative function
 
-  printf("\nTest av rekursiv funktion.\n\n");
-  printf("Mata in en teckensträng:\n");
+  // Execution of the recursive function
+  printf("\nTesting the recursive function.\n\n");
+  printf("Input text:\n");
+  fgets(input_1, sizeof input_1, stdin);
+  recursive(input_1);
+  printf("the reverse string is: %s\n",input_1);
 
-  fgets(input, sizeOf input, stdin);
-  recursive(input);
-
-  printf("Den omvända teckensträngen är: %s\n",string1);
-
-  //iterative();
+  // Execution of the iterative function
+  /*
+  printf("\nTesting the iterative function.\n\n");
+  printf("Input text (max 10 characters):\n");
+  fgets(input_2, sizeOf input_2, stdin);
+  iterative(input_2);
+  printf("the reverse string is: %s\n",input_2);
+  */
 
   return 0;
 
