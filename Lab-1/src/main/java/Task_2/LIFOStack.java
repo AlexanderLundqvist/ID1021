@@ -6,8 +6,7 @@ package Task_2;
 * @author Alexander Lundqvist
 * Created: 30-08-2021
 *
-* Single file program that performs the task of taking in a string input and
-* then print out the characters in reverse order by using a iterative function.
+* ALSKDNALSKDNALSKdn
 * implemented with an ADT (LIFO stack) built from scratch.
 * The program can only take strings not containing whitespaces.
 * 
