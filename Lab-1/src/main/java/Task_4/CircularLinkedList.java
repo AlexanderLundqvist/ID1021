@@ -1,17 +1,16 @@
 /*
- * Implement a generic iterable FIFO-queue based on a double linked circular 
- * list (see the pdf in the module Course litterature for a description of 
- * double linked circular lists). You should print the content of the list 
+ * Implement a generic iterable circular linked list which allows the user 
+ * to insert and remove elements to/from the front and back end of the queue. 
+ * Be careful when designing the API. You should print the content of the list 
  * after each insertion/deletion of an element.
- *
  */
-package Task_3;
+package Task_4;
 
 /*******************************************************************************
 *
-* Seminar 1 - task 2
+* Seminar 1 - task 3
 * @author Alexander Lundqvist
-* Created: 30-08-2021
+* Created: 12-09-2021
 *
 * 
 * This class implements a generic iterable FIFO-queue based on a double linked 
@@ -23,19 +22,18 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class FIFOQueue<Item> implements Iterable<Item>{
-    private Node<Item> sentinel_first;        // Sentinel element after "sentinel_first item"
-    private Node<Item> sentinel_last;         // Sentinel element before "sentinel_first item"
-    private int size;                         // number of items in the queue
+public class CircularLinkedList<Item> implements Iterable<Item>{
+    private Node<Item> head;         // Start of the queue
+    private Node<Item> tail;         // End of the queue
+    private int size;                // Number of items in the queue
     
     /**
-     * Constructor for the FIFOQueue. Only called once.
+     * Constructor for the CircularLinkedList. Only called once.
      */
-    public FIFOQueue() {
-        sentinel_first = new Node<>();
-        sentinel_last = new Node<>();
-        sentinel_first.next_node = sentinel_last;
-        sentinel_last.previous_node = sentinel_first;
+    public CircularLinkedList() {
+        head = null;
+        tail = null;
+        size = 0;
     }
     
     /**
@@ -44,38 +42,34 @@ public class FIFOQueue<Item> implements Iterable<Item>{
     private class Node<Item> {
         private Item item;
         private Node<Item> next_node;
-        private Node<Item> previous_node;
     }
     
-    /**
-     * Inserts a new item into the queue
-     * @param item is the item to queue
-     */
-    public void enqueue(Item item) {
-        Node<Item> old_last = sentinel_last.previous_node;
-        Node<Item> new_last = new Node<>();
-        new_last.item = item;
-        new_last.next_node = sentinel_last;
-        new_last.previous_node = old_last;
-        sentinel_last.previous_node = new_last;
-        old_last.next_node = new_last;
+    
+    public void enqueueStart(Item item) {
+        Node new_first = new Node<>();
+        head.item = item;
+        
+        if (tail == null) {
+            
+        }
+        
+       
         size++;
         queueToString();
     }
-        
-    /**
-     * Removes an element from the queue according to the FIFO policy
-     * @return the dequed element
-     */
-    public Item dequeue() {
-        Node<Item> first_in = sentinel_first.next_node;
-        sentinel_first.next_node = first_in.next_node;
-        sentinel_first.next_node.previous_node = sentinel_first;
-        first_in.next_node = null;      // Removing old references
-        first_in.previous_node = null;  // Removing old references
-        size--;
-        queueToString();
-        return first_in.item;
+    
+    
+    public void enqueueEnd(Item item) {
+       
+    }
+    
+    
+    public Item dequeueStart() {
+        return null;
+    }
+    
+    public Item dequeueEnd() {
+        return null;
     }
     
     /**
@@ -109,7 +103,7 @@ public class FIFOQueue<Item> implements Iterable<Item>{
                 formatedString.append("[");
                 formatedString.append(item);
                 formatedString.append("]");
-                if (counter <= size) {
+                if (counter < size) {
                     formatedString.append(","); 
                 }
             }
@@ -125,42 +119,47 @@ public class FIFOQueue<Item> implements Iterable<Item>{
      */
     public static void main(String[] args) {
         
-        FIFOQueue queue = new FIFOQueue();
+        CircularLinkedList queue = new CircularLinkedList();
         
         // Hardcoded operations for easy testing
-        /*
-        queue.enqueue('H');
-        queue.enqueue('e');
-        queue.enqueue('l');
-        queue.enqueue('l');
-        queue.enqueue('o');
-
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-  
-        queue.enqueue('W');
-        queue.enqueue('o');
-        queue.enqueue('r');
-        queue.enqueue('l');
-        queue.enqueue('d');
         
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue(); 
+        queue.enqueueStart('H');
+        queue.enqueueStart('e');
+        queue.enqueueStart('l');
+        queue.enqueueStart('l');
+        queue.enqueueStart('o');
+        
+        /*
+        queue.dequeueStart();
+        queue.dequeueStart();
+        queue.dequeueStart();
+        queue.dequeueStart();
+        queue.dequeueStart();
+  
+        queue.enqueueEnd('W');
+        queue.enqueueEnd('o');
+        queue.enqueueEnd('r');
+        queue.enqueueEnd('l');
+        queue.enqueueEnd('d');
+        
+        queue.dequeueEnd();
+        queue.dequeueEnd();
+        queue.dequeueEnd();
+        queue.dequeueEnd();
+        queue.dequeueEnd();
         */
+        
+        /*
         int choice = 0;
         while (true) {
             System.out.println();
             System.out.println("****** Testing interface for the ADT ******");
             System.out.println("Choose an option:");
-            System.out.println("1. Queue a char.");
-            System.out.println("2. Dequeue.");
-            System.out.println("3. Exit.");
+            System.out.println("1. Queue a char to start of queue.");
+            System.out.println("2. Queue a char to end of queue.");
+            System.out.println("3. Dequeue from start.");
+            System.out.println("4. Dequeue from end.");
+            System.out.println("5. Exit.");
             System.out.println();
             Scanner input = new Scanner(System.in);
             System.out.println("Choice: ");
@@ -173,11 +172,11 @@ public class FIFOQueue<Item> implements Iterable<Item>{
             }
             
             System.out.println();
-            if (choice != 1 && choice != 2 && choice != 3) {
+            if (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5) {
                 System.out.println("Not a valid choice, try again!");
                 continue;
             }
-            else if (choice == 3) {
+            else if (choice == 5) {
                 break;
             }
             else {
@@ -186,25 +185,45 @@ public class FIFOQueue<Item> implements Iterable<Item>{
                         System.out.println("input a char: ");
                         try {
                             char item = input.next().charAt(0);
-                            queue.enqueue(item);
+                            queue.enqueueStart(item);
                         break;
                         } catch (Exception e) {
                             System.out.println("Wrong input!");
                             break;
                         }
                     case 2:
+                        System.out.println("input a char: ");
+                        try {
+                            char item = input.next().charAt(0);
+                            queue.enqueueEnd(item);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Wrong input!");
+                            break;
+                        }
+                        
+                    case 3:
                         if (queue.isEmpty()) {
                             System.out.println("Queue is empty!");
                         }
                         else {
-                            queue.dequeue();
+                            queue.dequeueStart();
+                        }
+                        break;
+                        
+                    case 4:
+                        if (queue.isEmpty()) {
+                            System.out.println("Queue is empty!");
+                        }
+                        else {
+                            queue.dequeueEnd();
                         }
                         break;
                 }
             }
         } 
         System.out.println();
-        
+        */
     }    
     
     /**
@@ -213,7 +232,7 @@ public class FIFOQueue<Item> implements Iterable<Item>{
      * @return an iterator that can iterate through the queue
      */
     public Iterator<Item> iterator() {
-        return new DoublyLinkedIterator(sentinel_first);
+        return new DoublyLinkedIterator(head);
     }
     
     /**
@@ -241,3 +260,4 @@ public class FIFOQueue<Item> implements Iterable<Item>{
         }
     }
 }
+
