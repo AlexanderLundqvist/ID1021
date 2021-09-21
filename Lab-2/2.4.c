@@ -1,12 +1,8 @@
 /*******************************************************************************
 *
-* Seminar 2 - task 4
+* Seminar 2 - task 3
 * Author: Alexander Lundqvist
-* Created: 09-09-2020
-* Last updated:
-*
-*
-* ---------------------------------README---------------------------------------
+* Created: 21-09-2021
 *
 * The code implements a function that orders an array that all negative elements
 * comes before the positive. It also implements some auxillary functions like
