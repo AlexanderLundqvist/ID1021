@@ -23,6 +23,7 @@ public class InsertionSort {
     /**
      * Insertion sort that sorts an integer array and counts the 
      * amount of swaps.
+     * 
      * @param array is the array to be sorted
      * @return the swap count
      */
@@ -45,41 +46,52 @@ public class InsertionSort {
     /**
      * This function calculates the amount of required swaps
      * and prints the swaps BEFORE the array is sorted.
-     * @param array the input array which will be examined
+     * The inversions are not the actual operation. Instead it shows what other 
+     * element that element i has to pass to get to the right position.
      * 
-     * System.out.println("[index: " + indexPointer + ", content: " + 
-                                        array[indexPointer] + "], [index: " + j + 
-                                        ", content: " + array[j] + "]");
+     * @param array the input array which will be examined
      */
     public static void printInversions(int[] array) {
         int inversions = 0;
-        int indexPointerPrev, indexPointerNext;
-        for (int i = 0; i < array.length; i++) {
-            c = i;
-            indexPointerNext = i + 1;
-            while (indexPointerNext > 0) {
-                if (array[indexPointerNext] < array[indexPointerPrev]) {
-                    System.out.println("[index: " + indexPointerNext + ", content: " + 
-                                        array[indexPointerNext] + "], [index: " + indexPointerPrev + 
-                                        ", content: " + array[indexPointerPrev] + "]");
+        for(int i = 0; i < array.length; i++){
+            for(int j = i + 1; j < array.length ; j++){
+                if(array[i] > array [j]){
+                    System.out.println("[index: " + i + ", content: " + 
+                                        array[i] + "], [index: " + j + 
+                                        ", content: " + array[j] + "]");
                     inversions++;
-                    indexPointerPrev--;
-                    indexPointerNext--;
-                } 
+                }
                 else {
                     break;
-                } 
+                }
             }
         }
         System.out.println("Expected amount of inversions: " + inversions);
+        System.out.println();
     }
     
     /**
-     * Applies insertion sort in descending order on the array.
+     * Applies insertion sort in descending order on the array. Only works for
+     * integer arrays.
+     * 
      * @param array is the array to be sorted
      */
-    public static void insertionSortDescending(int[] array) {
-        
+    public static int insertionSortDescending(int[] array) {
+        negate(array);
+        int swaps = insertionSort(array);
+        negate(array);
+        return swaps;
+    }
+    
+    /**
+     * Helper function to the descending sort. 
+     * 
+     * @param array is the array that will be negated
+     */
+    private static void negate(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = -array[i];
+        }
     }
     
     /**
@@ -95,6 +107,7 @@ public class InsertionSort {
     /**
      * Auxiliary function that formats the array into a readable format with
      * formatting specified in the lab pm.
+     * 
      * @param array is the array to be sorted
      */
     public static void toString(int[] array) {
@@ -112,10 +125,11 @@ public class InsertionSort {
     
     /**
      * Main class with unit tests for the algorithm class.
+     * 
      * @param args takes no input
      */
     public static void main(String[] args) {
-        int[] test = {5, 4, 3, 2, 1}; // For quick testing                
+        
         Scanner input = new Scanner(System.in);
         
         // Define array size
@@ -148,10 +162,21 @@ public class InsertionSort {
             printInversions(array);
             
             // Task 1
+            /*
             System.out.println("\nSorting the array: ");
             int swaps = insertionSort(array);
             System.out.println("\nAmount of swaps: " + swaps);
+            */
+            
+            // Task 7
+            /*
+            System.out.println("\nReversing the array: ");
+            swaps = insertionSortDescending(array);
+            System.out.println("\nArray after sorting: ");
+            toString(array);
+            System.out.println("\nAmount of swaps: " + swaps);
             System.out.println("\n");
+            */
         }
     }
 }

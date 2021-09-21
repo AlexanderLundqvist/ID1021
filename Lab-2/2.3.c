@@ -12,9 +12,7 @@
 * correct array length, i.e positive integers.
 *
 * The algoritm of the ordering function is in-place, as it only takes a pointer
-* and int as arguments. It orders the array in the memory and uses no extra data
-* structures.
-*
+* and int as arguments. It orders the array in the memory and uses no extra memory.
 *
 *******************************************************************************/
 
@@ -22,7 +20,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-/* A function that implements swapping two elements */
+/* A function that implements swapping two pointers */
 void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
