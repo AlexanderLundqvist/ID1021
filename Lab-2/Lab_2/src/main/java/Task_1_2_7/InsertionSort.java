@@ -6,7 +6,7 @@ package Task_1_2_7;
 * Created: 16-09-2021
 *
 * 
-* This class implements insertion sort that will be used in later tasks.
+* This class implements insertion sort that will be used for task 1, 2 and 7.
 * Based on <a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/Insertion.java.html">Link</a>
 * The sorting method only works for primitive integers.
 *
