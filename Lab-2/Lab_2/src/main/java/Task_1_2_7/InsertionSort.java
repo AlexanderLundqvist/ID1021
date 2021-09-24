@@ -11,8 +11,6 @@ package Task_1_2_7;
 * The sorting method only works for primitive integers.
 *
 * 
-* About algorithm
-* 
 *
 *******************************************************************************/
 

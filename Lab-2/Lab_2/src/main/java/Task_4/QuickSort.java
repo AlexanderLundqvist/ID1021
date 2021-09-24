@@ -11,9 +11,6 @@ package Task_4;
 * Based on <a href="https://algs4.cs.princeton.edu/23quicksort/Quick.java.html">Link</a>
 * The sorting method only works for primitive integers.
 *
-* 
-* About algorithm
-* 
 *
 *******************************************************************************/
 
@@ -21,14 +18,34 @@ import java.util.Scanner;
 
 public class QuickSort {
     
-    /**
-     * Helper function for easier understanding of sorting code.
-     * Swaps place with two elements in the array. 
+     /**
+     * The sorting function for the API. Provides easy function call for the client
+     * Relies on auxiliary functions.
+     * 
+     * @param array is the array to be sorted
      */
-    private static void swap(int[] array, int i, int j) {
-        int swap = array[i];
-        array[i] = array[j];
-        array[j] = swap;
+    public static void sort(int[] array) {
+        
+    } 
+    
+    /**
+     * 
+     * @param array
+     * @param low_index
+     * @param high_index 
+     */
+    private static void sort(int[] array, int low_index, int high_index) {
+        
+    }
+    
+    /**
+     * 
+     * @param array
+     * @param low_index
+     * @param high_index 
+     */
+    private static void partition(int[] array, int low_index, int high_index) {
+        
     }
     
     /**
@@ -85,7 +102,9 @@ public class QuickSort {
             System.out.println("\nArray before sorting: ");
             toString(array);
             
-            // Rest of test code
+            System.out.println("\nArray after sorting: ");
+            sort(array);
+            toString(array);
         }
     }
 }
