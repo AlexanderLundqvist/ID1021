@@ -24,28 +24,68 @@ public class QuickSort {
      * 
      * @param array is the array to be sorted
      */
-    public static void sort(int[] array) {
-        
+    public static void quickSort(int[] array) {
+        sort(array, 0, array.length-1);
     } 
     
     /**
+     * Sorts the array recursivly by partitioning the array around a
+     * pivot/partitioning element.
      * 
-     * @param array
-     * @param low_index
-     * @param high_index 
+     * @param array is the array to be sorted
+     * @param low_index is the low index of the array
+     * @param high_index is the high index of the array
      */
     private static void sort(int[] array, int low_index, int high_index) {
+        if (high_index <= low_index) return; // Base case for recursive function
+        
+        // Create the partitioning element that will divide the array
+        int partitioning_index = partition(array, low_index, high_index);
+        
+        // Call the function again for each subarray
+        sort(array, low_index, partitioning_index-1);
+        sort(array, partitioning_index+1, high_index);
         
     }
     
     /**
      * 
-     * @param array
-     * @param low_index
-     * @param high_index 
+     * 
+     * @param array is the array to be sorted
+     * @param low_index is the low index of the array
+     * @param high_index is the high index of the array
+     * @return the new partitioning element
      */
-    private static void partition(int[] array, int low_index, int high_index) {
+    private static int partition(int[] array, int low_index, int high_index) {
+        int i = low_index;
+        int j = high_index + 1;
+        int comparing_element = array[low_index];
         
+        while (true) {
+            
+            while (array[i+1] < comparing_element) {
+                i++;
+                if (i == high_index) break; 
+            }
+            
+            while (comparing_element < ) {
+                
+            }
+            
+            if(i >= j) break;
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * Helper function for easier understanding of sorting code.
+     * Swaps place with two elements in the array. 
+     */
+    private static void swap(int[] array, int i, int j) {
+        int swap = array[i];
+        array[i] = array[j];
+        array[j] = swap;
     }
     
     /**
@@ -103,8 +143,9 @@ public class QuickSort {
             toString(array);
             
             System.out.println("\nArray after sorting: ");
-            sort(array);
+            quickSort(array);
             toString(array);
+            System.out.println();
         }
     }
 }

@@ -16,7 +16,7 @@ package Task_1_2_7;
 
 import java.util.*;
 
-public class InsertionSort {
+public class InsertionSort_Task_1_2_7 {
     
     /**
      * Insertion sort that sorts an integer array and counts the 
@@ -160,21 +160,19 @@ public class InsertionSort {
             printInversions(array);
             
             // Task 1
-            /*
             System.out.println("\nSorting the array: ");
             int swaps = insertionSort(array);
             System.out.println("\nAmount of swaps: " + swaps);
-            */
+            
             
             // Task 7
-            /*
             System.out.println("\nReversing the array: ");
             swaps = insertionSortDescending(array);
             System.out.println("\nArray after sorting: ");
             toString(array);
             System.out.println("\nAmount of swaps: " + swaps);
             System.out.println("\n");
-            */
+            
         }
     }
 }

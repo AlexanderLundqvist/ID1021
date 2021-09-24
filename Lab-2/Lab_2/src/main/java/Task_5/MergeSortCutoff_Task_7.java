@@ -25,6 +25,6 @@ package Task_5;
 
 import java.util.Scanner;
 
-public class MergeSortCutoff {
+public class MergeSortCutoff_Task_7 {
     
 }

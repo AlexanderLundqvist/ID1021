@@ -27,7 +27,7 @@ public class MergeSort {
      * 
      * @param array is the array to be sorted
      */
-    public static void sort(int[] array) {
+    public static void mergeSort(int[] array) {
         int[] aux = new int[array.length];
         sort(array, aux, 0, array.length-1); // Length-1 for last index
     }
@@ -104,13 +104,6 @@ public class MergeSort {
         
         Scanner input = new Scanner(System.in);
         
-        /*
-        int[] test = {5,4,3,2,1};
-        toString(test);
-        sort(test);
-        toString(test);
-        */
-        
         // Define array size
         while (true) {
             int size = 0;
@@ -138,8 +131,9 @@ public class MergeSort {
             toString(array);
             
             System.out.println("\nArray after sorting: ");
-            sort(array);
+            mergeSort(array);
             toString(array);
+            System.out.println();
         }
         
     }

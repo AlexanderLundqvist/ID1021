@@ -22,6 +22,26 @@ import java.util.Scanner;
 public class InsertionSort {
     
     /**
+     * Insertion sort that sorts an integer array and counts the 
+     * amount of swaps.
+     * 
+     * @param array is the array to be sorted
+     * @return the swap count
+     */
+    public static void insertionSort(int[] array) {
+        for (int i = 0; i < array.length; i++) { // i=0 will not execute
+            for (int j = i; j > 0; j--) {
+                if (array[j] < array[j-1]) {
+                    swap(array, j, j-1);
+                } 
+                else {
+                    break;
+                }
+            }
+        }
+    }
+    
+    /**
      * Helper function for easier understanding of sorting code.
      * Swaps place with two elements in the array. 
      */
@@ -85,7 +105,10 @@ public class InsertionSort {
             System.out.println("\nArray before sorting: ");
             toString(array);
             
-            // Rest of test code
+            System.out.println("\nArray after sorting: ");
+            insertionSort(array);
+            toString(array);
+            System.out.println();
         }
     }
 }
