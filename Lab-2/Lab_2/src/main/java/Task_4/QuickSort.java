@@ -11,7 +11,6 @@ package Task_4;
 * Based on <a href="https://algs4.cs.princeton.edu/23quicksort/Quick.java.html">Link</a>
 * The sorting method only works for primitive integers.
 *
-*
 *******************************************************************************/
 
 import java.util.Scanner;
@@ -49,7 +48,9 @@ public class QuickSort {
     }
     
     /**
-     * 
+     * Partitions the input array into two arrays with one containing elements
+     * less than the partitioning element and one containing elements greater
+     * than the partitioning element.
      * 
      * @param array is the array to be sorted
      * @param low_index is the low index of the array
@@ -58,24 +59,29 @@ public class QuickSort {
      */
     private static int partition(int[] array, int low_index, int high_index) {
         int i = low_index;
-        int j = high_index + 1;
+        int new_partitioning_index = high_index + 1;
         int comparing_element = array[low_index];
         
+        
+        // Explanation 
         while (true) {
             
-            while (array[i+1] < comparing_element) {
-                i++;
+            while (array[++i] < comparing_element) {
                 if (i == high_index) break; 
             }
             
-            while (comparing_element < ) {
-                
+            while (comparing_element < array[--new_partitioning_index]) {
+                if (new_partitioning_index == low_index) break;
             }
             
-            if(i >= j) break;
+            if(i >= new_partitioning_index) break;
+            
+            swap(array, i, new_partitioning_index);
         }
         
-        return 0;
+        swap(array, low_index, new_partitioning_index);
+        
+        return new_partitioning_index;
     }
     
     /**

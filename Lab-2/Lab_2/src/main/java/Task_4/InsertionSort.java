@@ -11,10 +11,6 @@ package Task_4;
 * Based on <a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/Insertion.java.html">Link</a>
 * The sorting method only works for primitive integers.
 *
-* 
-* About algorithm
-* 
-*
 *******************************************************************************/
 
 import java.util.Scanner;
@@ -22,8 +18,7 @@ import java.util.Scanner;
 public class InsertionSort {
     
     /**
-     * Insertion sort that sorts an integer array and counts the 
-     * amount of swaps.
+     * Insertion sort that sorts an integer array.
      * 
      * @param array is the array to be sorted
      * @return the swap count

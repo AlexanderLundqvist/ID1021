@@ -62,26 +62,27 @@ public class Task_4 {
         /*************** Test methods *****************/
         
         // Insertion sort
-        long start1 = System.nanoTime();
+        long start1 = System.currentTimeMillis();
         insertionSort(array1);
-        long end1 = System.nanoTime();
+        long end1 = System.currentTimeMillis();
         long time1 = end1 - start1;
         
         // Merge sort
-        long start2 = System.nanoTime();
+        long start2 = System.currentTimeMillis();
         mergeSort(array2);
-        long end2 = System.nanoTime();
+        long end2 = System.currentTimeMillis();
         long time2 = end2 - start2;
         
         // Quick sort
-        long start3 = System.nanoTime();
-        //quickSort(array3);
-        long end3 = System.nanoTime();
+        long start3 = System.currentTimeMillis();
+        quickSort(array3);
+        long end3 = System.currentTimeMillis();
         long time3 = end3 - start3;
+        
         
         // Print time
         System.out.println();
-        System.out.println("Execution time for randomized array with size " + size + " in nanoseconds.");
+        System.out.println("Execution time for randomized array with size " + size + " in milliseconds.");
         System.out.println();
         System.out.println("Insertion sort: " + time1);
         System.out.println("Merge sort: " + time2);
