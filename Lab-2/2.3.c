@@ -65,12 +65,12 @@ void toString(int array[], int length){
 int main(void){
 
   // Basic test for checking the toString and order function
-  int testArray[6] = {1,-2,4,-3,-5,0};
+  int testArray[10] = {1,-2,4,-3,-5,0,4,-7,123,-200};
   printf("Testing toString with testArray:\n");
-  toString(testArray, 6);
+  toString(testArray, 10);
   printf("\n\nTesting arrayOrdered with testArray:\n");
-  arrayOrdered(testArray, 6);
-  toString(testArray, 6);
+  arrayOrdered(testArray, 10);
+  toString(testArray, 10);
 
 
   // Unit testing which takes input from the user in the form of

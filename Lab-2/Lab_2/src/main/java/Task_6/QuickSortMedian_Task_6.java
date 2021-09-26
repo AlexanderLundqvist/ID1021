@@ -1,29 +1,30 @@
-package Task_4;
+package Task_6;
+
+import java.util.Scanner;
 
 /*******************************************************************************
 *
-* Seminar 2 - Quick sort for task 4
+* Seminar 2 - Task 6
 * @author Alexander Lundqvist
 * Created: 22-09-2021
 *
 * 
-* This class implements quick sort.
-* Based on <a href="https://algs4.cs.princeton.edu/23quicksort/Quick.java.html">Link</a>
-* The sorting method only works for primitive integers.
+* This class implements quicksort with median-of-three partitioning.
+* Based on <a href="https://algs4.cs.princeton.edu/23quicksort/QuickBars.java.html">Link</a>
+* The sorting method only works for primitive integers. 
+*
 *
 *******************************************************************************/
 
-import java.util.Scanner;
-
-public class QuickSort {
+public class QuickSortMedian_Task_6 {
     
-     /**
+    /**
      * The sorting function for the API. Provides easy function call for the client
      * Relies on auxiliary functions.
      * 
      * @param array is the array to be sorted
      */
-    public static void quickSort(int[] array) {
+    public static void quickSort_3(int[] array) {
         sort(array, 0, array.length-1);
     } 
     
@@ -37,6 +38,11 @@ public class QuickSort {
      */
     private static void sort(int[] array, int low_index, int high_index) {
         if (high_index <= low_index) return; // Base case for recursive function
+        
+        // Creating a median of three as partitioning element
+        int mid_index = low_index + (high_index - low_index + 1)/2;
+        int median = median(array, low_index, mid_index, high_index);
+        swap(array, median, low_index); // Replace lowest element with the median element
         
         // Create the partitioning element that will divide the array
         int partitioning_index = partition(array, low_index, high_index);
@@ -58,38 +64,27 @@ public class QuickSort {
      * @return the new partitioning element
      */
     private static int partition(int[] array, int low_index, int high_index) {
-        int i = low_index; // subarray low index
-        int j = high_index + 1; // subarray high index
-        int partitioning_element = array[low_index];    // Choosing left-most element as partitioning element
+        int i = low_index;
+        int j = high_index + 1;
+        int partitioning_element = array[low_index];
         
-        // {3,4,1,5,2}
-        // Partition the subarray  
         while (true) {
             
-            // {3,4>,1,5,2}
-            // Run until we find element greater than partitioning element   
             while (array[++i] < partitioning_element) {
                 if (i == high_index) break; 
             }
-            // {3,4>,1,5,2<}
-            // Run until we find element less than partitioning element
+            
             while (partitioning_element < array[--j]) {
                 if (j == low_index) break;
             }
             
-            // If the indexes cross, the subarray is sorted and is ready to swap
-            // Partitioning elemet to final position
             if(i >= j) break;
             
-            // {3,2*,1,5,4*}
-            // Swap the elements found
             swap(array, i, j);
         }
         
-        // Swap the partitioning element so it is at the end of the subarray
         swap(array, low_index, j);
         
-        // Return the new partitioning index
         return j;
     }
     
@@ -101,6 +96,24 @@ public class QuickSort {
         int swap = array[i];
         array[i] = array[j];
         array[j] = swap;
+    }
+    
+    /** (3,1,2)
+     * Helper function to find the median between 3 elements
+     */
+    private static int median(int[] array, int low_index, int mid_index, int high_index) {
+        int low = array[low_index];
+        int mid = array[mid_index];
+        int high = array[high_index];
+        
+        if ((low < mid && mid < high) || (high < mid && mid < low)) {
+            return mid_index;
+        }
+        
+        else if ((mid < low && low < high || high < low && low < mid)) {
+            return low_index;
+        }
+        else return high_index;
     }
     
     /**
@@ -158,7 +171,7 @@ public class QuickSort {
             toString(array);
             
             System.out.println("\nArray after sorting: ");
-            quickSort(array);
+            quickSort_3(array);
             toString(array);
             System.out.println();
         }

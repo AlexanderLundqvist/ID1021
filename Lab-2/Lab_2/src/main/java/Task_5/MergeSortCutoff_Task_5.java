@@ -23,7 +23,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MergeSortCutoff_Task_5 {
-    private static final int CUTOFF_INDEX = 0;
+    private static int CUTOFF_INDEX = 0;
     
     /**
      * The sorting function for the API. Provides easy function call for the client
@@ -31,7 +31,8 @@ public class MergeSortCutoff_Task_5 {
      * 
      * @param array is the array to be sorted
      */
-    public static void mergeSortX(int[] array) {
+    public static void mergeSortX(int[] array, int cutoff) {
+        CUTOFF_INDEX = cutoff;
         int[] aux = new int[array.length];
         sort(array, aux, 0, array.length-1); // Length-1 for last index
     }
@@ -46,10 +47,15 @@ public class MergeSortCutoff_Task_5 {
      * @param high_index index of array
      */
     private static void sort(int[] array, int[] aux, int low_index, int high_index) {
-        if (high_index <= low_index) return;            // Base case for the recursive function
-        if () {
+        if (high_index <= low_index) return;                // Base case for the recursive function
+        
+        // Check if the subarray is the desired size for cutting of to insertion sort
+        if (high_index <= low_index + CUTOFF_INDEX) {
             insertionSort(array, low_index, high_index);
+            return;
         }
+        
+        // Else run the normal merge sort
         int mid = low_index + (high_index-low_index)/2;     // Mid needs to be calculated like this to account for the right/end partial array      
         sort(array, aux, low_index, mid);                   // Sort first sub array
         sort(array, aux, mid+1, high_index);                // Sort second subarray
@@ -72,14 +78,13 @@ public class MergeSortCutoff_Task_5 {
             aux[index] = array[index];
         }
         
-        // Need explanation
-        int i = low_index;      //
-        int j = mid_index + 1;  //
+        int i = low_index;      
+        int j = mid_index + 1; 
         for (int index = low_index; index <= high_index; index++) {
-            if      (i > mid_index)     array[index] = aux[j++]; //
-            else if (j > high_index)    array[index] = aux[i++]; //
-            else if (aux[j] < aux[i])   array[index] = aux[j++]; //
-            else                        array[index] = aux[i++]; //
+            if      (i > mid_index)     array[index] = aux[j++];
+            else if (j > high_index)    array[index] = aux[i++]; 
+            else if (aux[j] < aux[i])   array[index] = aux[j++];
+            else                        array[index] = aux[i++]; 
         }
     }
     
@@ -90,7 +95,7 @@ public class MergeSortCutoff_Task_5 {
      * @return the swap count
      */
     private static void insertionSort(int[] array, int low_index, int high_index) {
-        for (int i = 0; i < array.length; i++) {
+        for (int i = low_index; i < high_index; i++) {
             for (int j = i; j > 0; j--) {
                 if (array[j] < array[j-1]) {
                     swap(array, j, j-1);
@@ -159,6 +164,7 @@ public class MergeSortCutoff_Task_5 {
         // Define array size
         while (true) {
             int size = 0;
+            int cutoff = 0;
             System.out.println("Size of array: ");
             try {
                 size = input.nextInt();
@@ -166,6 +172,14 @@ public class MergeSortCutoff_Task_5 {
                 System.out.println("Wrong input!");
                 break;
             }
+            System.out.println("Cutoff value: ");
+            try {
+                cutoff = input.nextInt();
+            } catch (Exception e) {
+                System.out.println("Wrong input!");
+                break;
+            }
+            
             int[] array = new int[size];
             
             // Populate the array with user input
@@ -183,7 +197,7 @@ public class MergeSortCutoff_Task_5 {
             toString(array);
             
             System.out.println("\nArray after sorting: ");
-            mergeSortX(array);
+            mergeSortX(array, cutoff);
             toString(array);
             System.out.println();
         }
