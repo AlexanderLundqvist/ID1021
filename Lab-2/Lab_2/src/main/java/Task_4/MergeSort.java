@@ -66,10 +66,10 @@ public class MergeSort {
         int i = low_index;
         int j = mid_index + 1;
         for (int index = low_index; index <= high_index; index++) {
-            if      (i > mid_index)     array[index] = aux[j++]; 
-            else if (j > high_index)    array[index] = aux[i++];
-            else if (aux[j] < aux[i])   array[index] = aux[j++];
-            else                        array[index] = aux[i++];
+            if      (i > mid_index)     array[index] = aux[j++];  
+            else if (j > high_index)    array[index] = aux[i++];  
+            else if (aux[j] < aux[i])   array[index] = aux[j++];  
+            else                        array[index] = aux[i++];  
         }
     }  
     
