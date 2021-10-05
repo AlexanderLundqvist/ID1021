@@ -120,7 +120,8 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
                 return mid;                                  // Mid then gives all keys less than input key
         }
         return low; // Ignorera tidigare kommentar...
-                    // Low blir den rank som sökta nyckeln har
+    }               // Low blir den rank som sökta nyckeln har
+    
     /**
      * Returns the largest key in the ST
      * @return the largest key in the ST
