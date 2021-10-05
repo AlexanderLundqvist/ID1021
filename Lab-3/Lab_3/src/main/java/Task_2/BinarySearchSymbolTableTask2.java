@@ -6,38 +6,41 @@ package Task_2;
 * @author Alexander Lundqvist
 * Created: 30-09-2021
 *
-* 
+*
 * This class implements a binary search symbol table with minimal functionality.
 * Error handling is not implemented for the most part.
 * Based on:
 * <a href="https://algs4.cs.princeton.edu/31elementary/BinarySearchST.java.html">Link</a>
 * <a href="https://algs4.cs.princeton.edu/31elementary/FrequencyCounter.java.html">Link</a>
-* 
+*
 *******************************************************************************/
 
-import Utility.Queue;        
+import Utility.Queue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-        
+
+// Implementerar generics, men kunde lika gärna varit utan det här fallet och
+// bara kört med strings och ints..
 public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
     private static final int DEFAULT_CAPACITY = 2;
-    private Key[] keys;
-    private Value[] values;
-    private int size = 0;
-    
+    private Key[] keys; // Det som kommer vara våran ordered array med nycklar
+    private Value[] values; // Arrayen med värden associerade till dessa nycklar
+    private int size = 0; //
+
     // Initializes an empty symbol table with default size
     public BinarySearchSymbolTableTask2(){
-        keys   = (Key[]) new Comparable[DEFAULT_CAPACITY]; 
+        keys   = (Key[]) new Comparable[DEFAULT_CAPACITY];
         values = (Value[]) new Object[DEFAULT_CAPACITY];
     }
-    
+
+    // Onödig i den här koden. Tänkte att jag behövde den först
     // Initializes an empty symbol table with specified capacity
     public BinarySearchSymbolTableTask2(int capacity){
-        keys   = (Key[]) new Comparable[capacity]; 
+        keys   = (Key[]) new Comparable[capacity];
         values = (Value[]) new Object[capacity];
     }
-    
+
     /**
      * Inserts a new key-value pair into the ST.
      * @param key new key
@@ -49,29 +52,29 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
             delete(key);
             return;
         }
-        
+
         // What pontential rank the key has
         int i = rank(key);
-        
+
         // If key is already in table, replace the old value with the new
         if (i < size && keys[i].compareTo(key) == 0) {
             values[i] = value;
             return;
         }
-        
+
         // Resize if size has reached capacity
-        if (size == keys.length) resize(2*keys.length);
-        
+        if (size == keys.length) resize(2*keys.length); // Så att vi inte behöver resiza så ofta
+
         // Insert the new key-value pair
-        for (int j = size; j > i; j--) {
-            keys[j]   = keys[j-1];
+        for (int j = size; j > i; j--) { // Gå från högsta key
+            keys[j]   = keys[j-1]; // Kopiera värden ett steg åt höger
             values[j] = values[j-1];
         }
-        keys[i] = key;
-        values[i] = value;
+        keys[i] = key; // Nu är platsenrna för kev, value paret "ledig"
+        values[i] = value; // dvs de innehåller en duplicate som kan ersättas
         size++;
     }
-    
+
     /**
      * Retrieves the value associated with the input key.
      * @param key is the input key
@@ -85,13 +88,21 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         }
         return null;
     }
-    
-    /**
-     * This is the binary search function. It searches through
-     * the ST to find how many keys that are smaller than the input key.
-     * @param key is the input key
-     * @return the number of keys smaller than the input key
-     */
+    /*
+    The heart of the implementation is the rank() method, which returns the
+    number of keys smaller than a given key.
+
+    For get(), the rank tells us precisely where the key is to be found if it
+    is in the table (and, if it is not there, that it is not in the table).
+
+    For put(), the rank tells us precisely where to update the value when the
+    key is in the table, and precisely where to put the key when the key is not
+    in the table.
+
+    We move all larger keys over one position to make room
+    (working from back to front) and insert the given key and value into the
+    proper positions in their respective arrays.
+    */
     public int rank(Key key) {
         // Indexes for searching
         int low = 0;
@@ -108,9 +119,8 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
             else                                             // If answer is 0, then the key is found
                 return mid;                                  // Mid then gives all keys less than input key
         }
-        return low; // Return low if key was not found as low tells us how many there would have been 
-    }
-    
+        return low; // Ignorera tidigare kommentar...
+                    // Low blir den rank som sökta nyckeln har
     /**
      * Returns the largest key in the ST
      * @return the largest key in the ST
@@ -118,7 +128,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
     public Key max() {
         return keys[size-1];
     }
-    
+
     /**
      * Returns the smallest key in the ST
      * @return  the smallest key in the ST
@@ -126,7 +136,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
     public Key min() {
         return keys[0];
     }
-    
+
     /**
      * Searches the ST for the input key
      * @param key is the key to be searched for
@@ -135,9 +145,9 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
     public boolean contains(Key key) {
         return get(key) != null;
     }
-    
+
     /**
-     * 
+     *
      * @param key is the key to delete
      */
     public void delete(Key key) {
@@ -150,7 +160,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         if (i == size || keys[i].compareTo(key) != 0) {
             return;
         }
-        
+
         //
         for (int j = i; j < size-1; j++)  {
             keys[j] = keys[j+1];
@@ -158,14 +168,14 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         }
 
         size--;
-        keys[size] = null; 
+        keys[size] = null;
         values[size] = null;
 
         // Resize if full
         if (size > 0 && size == keys.length/4) resize(keys.length/2);
-    
+
     }
-    
+
     /**
      * Checks the size of the symbol table
      * @return the size of the symbol table
@@ -173,7 +183,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
     public int size() {
         return size;
     }
-    
+
     /**
      * Checks if symbol table is empty
      * @return boolean if symbol table is empty or not.
@@ -181,7 +191,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
     public boolean isEmpty() {
         return (size == 0);
     }
-    
+
     /**
      * Internal resizing function for the key and value arrays.
      * @param newCapacity is the new capacity for the ST
@@ -197,7 +207,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         keys = newKeys;
         values = newValues;
     }
-    
+
     /**
      * Returns all the keys as an Iterable.
      * @return an iterator that can iterate through the keys in the ST.
@@ -205,7 +215,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
     public Iterable<Key> keys() {
         return keys(min(), max());
     }
-    
+
     /**
      * Returns all keys in this symbol table in the given range,
      * as an Iterable.
@@ -215,14 +225,14 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
      * @return all keys between endpoints
      */
     public Iterable<Key> keys(Key lo, Key hi) {
-        Queue<Key> queue = new Queue<Key>(); 
-        if (lo.compareTo(hi) > 0) return queue;
-        for (int i = rank(lo); i < rank(hi); i++) 
-            queue.enqueue(keys[i]);
-        if (contains(hi)) queue.enqueue(keys[rank(hi)]);
-        return queue; 
-    }    
-    
+        Queue<Key> queue = new Queue<Key>(); // Implementeras med en fifo kö
+        if (lo.compareTo(hi) > 0) return queue; // negativt intervall
+        for (int i = rank(lo); i < rank(hi); i++) //
+            queue.enqueue(keys[i]); //
+        if (contains(hi)) queue.enqueue(keys[rank(hi)]); //
+        return queue;
+    }
+
     /**
      * Main class with testing by frequency counter.
      * @param args takes no input
@@ -231,11 +241,11 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         Scanner input = new Scanner(System.in);
         File theText = new File("filteredtext.txt");
         Scanner reader = new Scanner(theText);
-     
+
         // Setup for the test
         BinarySearchSymbolTableTask2<String, Integer> symbolTable = new BinarySearchSymbolTableTask2<String, Integer>();
         int MAX_WORDS;
-        int minlen = 3; 
+        int minlen = 3;
         int distinct = 0;
         int words = 0;
 
@@ -249,14 +259,14 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         long startBuild = System.currentTimeMillis();
         while ((reader.hasNext()) && (words < MAX_WORDS)) {
             String key = (reader.next()).toLowerCase(); // To avoid duplicates
-            if (key.length() < minlen) continue;
+            if (key.length() < minlen) continue; // Om den inlästa strängen är mindre än 3 bokstäver, ignorera
             words++;
             if (symbolTable.contains(key)) {
-                symbolTable.put(key, symbolTable.get(key) + 1);
+                symbolTable.put(key, symbolTable.get(key) + 1); // Ökar värdet vid den nykeln/ordet
             }
             else {
-                symbolTable.put(key, 1);
-                distinct++;
+                symbolTable.put(key, 1); // Om det är en ny nyckel, lägg till, ge värde 1
+                distinct++;              // Och öka countern
             }
         }
         long stopBuild = System.currentTimeMillis();
@@ -264,11 +274,11 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
 
         // Find a key with the highest frequency count
         long startSearch = System.currentTimeMillis();
-        String max = "";
-        symbolTable.put(max, 0);
-        for (String word : symbolTable.keys()) {
-            if (symbolTable.get(word) > symbolTable.get(max))
-                max = word;
+        String max = ""; // Variabal att lagra nyckeln i
+        symbolTable.put(max, 0); //
+        for (String word : symbolTable.keys())  // För alla ord/nycklar i ST
+            if (symbolTable.get(word) > symbolTable.get(max)) // Om värdet associerat med "iterable index" är större än maximum
+                max = word;                                   // Ersätt då värdet för max med detta
         }
         long stopSearch = System.currentTimeMillis();
         long elapsedTimeSearch = stopSearch - startSearch;
@@ -282,6 +292,6 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         System.out.println("Search time     = " + elapsedTimeSearch + " ms");
         System.out.println("*****************************************************************************\n");
 
-        symbolTable = null; // Clean up memory      
-    }     
+        symbolTable = null; // Clean up memory
+    }
 }

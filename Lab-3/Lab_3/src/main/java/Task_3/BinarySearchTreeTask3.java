@@ -12,18 +12,18 @@ import java.util.Scanner;
 * @author Alexander Lundqvist
 * Created: 30-09-2021
 *
-* 
+*
 * This class implements a binary search tree with minimal functionality.
 * Error handling is not implemented for the most part.
 * Based on:
 * <a href="https://algs4.cs.princeton.edu/31elementary/BinarySearchST.java.html">Link</a>
 * <a href="https://algs4.cs.princeton.edu/31elementary/FrequencyCounter.java.html">Link</a>
-* 
+*
 *******************************************************************************/
 
 public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
     private Node root;             // Root node of the tree
-    
+
     // Node helper class for BST
     private class Node {
         private Key key;           // sorted by key
@@ -37,37 +37,37 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
             this.size = size;
         }
     }
-    
+
     // Initialize empty search tree
     public BinarySearchTreeTask3() {
     }
-    
+
     /**
-     * 
+     *
      * @param key the input key
      * @return true if key exists in the tree, else false
      */
     public boolean contains(Key key) {
         return get(key) != null;
     }
-    
+
     /**
-     * 
+     *
      * @return true if the tree is empty
      */
     public boolean isEmpty() {
         return (size() == 0);
     }
-    
+
     public int size() {
         return size(root);
     }
-    
+
     private int size(Node node) {
         if (node == null) return 0;
         else return node.size;
     }
-    
+
     /**
      * Inserts a new key-value pair into the tree
      * @param key the input key
@@ -78,14 +78,25 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
     }
 
     private Node put(Node node, Key key, Value value){
-        if (node == null) return new Node(key, value, 1);
-        int cmp = key.compareTo(node.key);
-        if      (cmp < 0) node.left = put(node.left, key, value);
-        else if (cmp > 0) node.right = put(node.right, key, value);
-        else    node.val = value;
-        return node;
+        if (node == null) return new Node(key, value, 1); // Om den aktuella noden är tom, sätt in en ny nod
+
+        int cmp = key.compareTo(node.key); // Jämför input key med aktuella nodens key
+
+        if      (cmp < 0) node.left = put(node.left, key, value); // Om inskickad key är mindre än nodens key
+                                                                  // för den nod vi kollar, kalla rekursivt
+                                                                  // med den nuvarande nodens vänstra child då alla
+                                                                  // keys till vänster är mindre
+
+                                                                  //
+
+        else if (cmp > 0) node.right = put(node.right, key, value); // Om inskickad key är större än nodens key
+                                                                    // Kalla igen rekursit fast nu med höger child
+                                                                    // då alla keys till höger är större
+
+        else    node.val = value; // Om jämförelsen var lika, då ersätter vi värdet
+        return node; // Returnera den noden så att trädet resetar sina länkar korrekt när vi rekurserar tillbaka
     }
-    
+
     /**
      * Returns the value associated with the input key
      * @param key the input key
@@ -94,17 +105,24 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
     public Value get(Key key) {
         return get(root, key);
     }
-    
+
     private Value get(Node node, Key key) {
         if (node == null) return null;
-        int cmp = key.compareTo(node.key);
-        if      (cmp < 0) return get(node.left, key);
-        else if (cmp > 0) return get(node.right, key);
-        else              return node.val;
+        int cmp = key.compareTo(node.key); // Jämför med den inskickade noden
+        if      (cmp < 0) return get(node.left, key); // Om inskickad key är mindre än nodens key
+                                                      // för den nod vi kollar, kalla rekursivt
+                                                      // med den nuvarande nodens vänstra child då alla
+                                                      // keys till vänster är mindre
+
+        else if (cmp > 0) return get(node.right, key); // Om inskickad key är större än nodens key
+                                                       // Kalla igen rekursit fast nu med höger child
+                                                       // då alla keys till höger är större
+
+        else              return node.val; // Om värdet är lika så har vi kommit till rätt nod och returnerar det värdet
     }
-    
-    
-    
+
+
+
     /**
      * Returns all keys as an Iterable
      * @return all the keys in the tree
@@ -113,38 +131,41 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
         if (isEmpty()) return new Queue<Key>();
         return keys(min(), max());
     }
-    
+
     public Iterable<Key> keys(Key lo, Key hi) {
         Queue<Key> queue = new Queue<Key>();
         keys(root, queue, lo, hi);
         return queue;
-    } 
-    
-    private void keys(Node x, Queue<Key> queue, Key lo, Key hi) { 
-        if (x == null) return; 
-        int cmplo = lo.compareTo(x.key); 
-        int cmphi = hi.compareTo(x.key); 
-        if (cmplo < 0) keys(x.left, queue, lo, hi); 
-        if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key); 
-        if (cmphi > 0) keys(x.right, queue, lo, hi); 
     }
-    
+
+    // Onödigt komplicerad,
+    private void keys(Node x, Queue<Key> queue, Key lo, Key hi) {
+        if (x == null) return;
+        int cmplo = lo.compareTo(x.key);
+        int cmphi = hi.compareTo(x.key);
+        if (cmplo < 0) keys(x.left, queue, lo, hi);
+        if (cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
+        if (cmphi > 0) keys(x.right, queue, lo, hi);
+    }
+
     public Key min() {
         return min(root).key;
-    } 
+    }
 
-    private Node min(Node x) { 
-        if (x.left == null) return x; 
-        else                return min(x.left); 
-    } 
+    // Letar reda på den nod som har minst value
+    private Node min(Node x) {
+        if (x.left == null) return x;
+        else                return min(x.left);
+    }
 
     public Key max() {
         return max(root).key;
-    } 
+    }
 
+    // Letar reda på den nod som har störst value
     private Node max(Node x) {
-        if (x.right == null) return x; 
-        else                 return max(x.right); 
+        if (x.right == null) return x;
+        else                 return max(x.right);
     }
     /**
      * Main class with testing by frequency counter.
@@ -154,11 +175,11 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
         Scanner input = new Scanner(System.in);
         File theText = new File("filteredtext.txt");
         Scanner reader = new Scanner(theText);
-     
+
         // Setup for the test
         BinarySearchTreeTask3<String, Integer> searchTree = new BinarySearchTreeTask3<String, Integer>();
         int MAX_WORDS;
-        int minlen = 3; 
+        int minlen = 3;
         int distinct = 0;
         int words = 0;
 
@@ -175,11 +196,11 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
             if (key.length() < minlen) continue;
             words++;
             if (searchTree.contains(key)) {
-                searchTree.put(key, searchTree.get(key) + 1);
+                searchTree.put(key, searchTree.get(key) + 1); // Ökar värdet vid den nykeln/ordet
             }
             else {
-                searchTree.put(key, 1);
-                distinct++;
+                searchTree.put(key, 1); // Om det är en ny nyckel, lägg till, ge värde 1
+                distinct++;             // Och öka countern
             }
         }
         long stopBuild = System.currentTimeMillis();
@@ -189,9 +210,9 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
         long startSearch = System.currentTimeMillis();
         String max = "";
         searchTree.put(max, 0);
-        for (String word : searchTree.keys()) {
-            if (searchTree.get(word) > searchTree.get(max))
-                max = word;
+        for (String word : searchTree.keys()) { // Alla nycklar har lagst i en fifo kö, iterera över varje
+            if (searchTree.get(word) > searchTree.get(max)) // Om värdet associerat med "iterable index" är större än det för max
+                max = word;                                 // Ersätt då värdet för max med detta
         }
         long stopSearch = System.currentTimeMillis();
         long elapsedTimeSearch = stopSearch - startSearch;
@@ -205,6 +226,6 @@ public class BinarySearchTreeTask3<Key extends Comparable<Key>, Value> {
         System.out.println("Search time     = " + elapsedTimeSearch + " ms");
         System.out.println("*****************************************************************************\n");
 
-        searchTree = null; // Clean up memory      
-    } 
+        searchTree = null; // Clean up memory
+    }
 }
