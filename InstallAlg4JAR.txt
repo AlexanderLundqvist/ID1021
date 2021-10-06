@@ -1,0 +1,15 @@
+Open the Projects tab.
+Right-click on Dependencies.
+Select Add dependency.
+Set groupId to: group.id (can be anything)
+Set artifactId to: artifact.id (can be anything)
+Set version to: 1.0 (can be anything)
+Click Add to continue.
+Dependency is added to pom.xml and appears under the Libraries node of Maven project. Continue:
+
+Expand Dependencies.
+Right-click on library (e.g., group.id).
+Select Manually install artifact.
+Set Artifact to install with the Java Archive (.jar) file path.
+Click Install locally.
+Library is installed locally with dependency attributes (coordinates) entered in steps 4 - 6.

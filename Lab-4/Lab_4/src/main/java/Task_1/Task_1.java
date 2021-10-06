@@ -2,14 +2,15 @@ package Task_1;
 
 /*********************************** README ************************************
 *
-* Seminar 4 - Task 1 Binary search symbol table (ordered array symbol table)
+* Seminar 4 - Task 1 DPS (Depth first search) 
 * @author Alexander Lundqvist
 * Created: 05-10-2021
 *
 *
-* This class implements a 
+* This class implements DPS(Depth first search) that can find paths 
+* 
 * Based on:
-* <a href="https://algs4.cs.princeton.edu/31elementary/BinarySearchST.java.html">Link</a>
+* <a href="https://algs4.cs.princeton.edu/41graph/DepthFirstSearch.java.html">Link</a>
 *
 * For this part you should assume that the edges defined by the vertex pairs are two-way.
 * Write a program based on DFS which can answer questions of the type: 
@@ -23,9 +24,10 @@ package Task_1;
 public class Task_1 {
     
     
+    
     /**
-     * Main class with testing by frequency counter.
-     * @param args takes no input
+     * Main method with unit testing for the class.
+     * @param args takes no input arguments
      */
     public static void main(String[] args) {
         
