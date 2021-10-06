@@ -1,14 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Task_2;
 
-/**
- *
- * @author Alexander
- */
+/*********************************** README ************************************
+*
+* Title placeholder
+* @author Alexander Lundqvist
+* Created: 06-10-2021
+*
+* About this class:
+*
+*
+* Based on:
+* <a href="">Link</a>
+*
+*******************************************************************************/
+
 public class Task_2 {
     
+    // Default constructor
+    public Task_2() {
+    }
+    
+    public static void main(String[] args) {
+        
+    }
 }
