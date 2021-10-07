@@ -278,7 +278,7 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
         String max = ""; // Variabal att lagra nyckeln i
         symbolTable.put(max, 0); //
         for (String word : symbolTable.keys())  // För alla ord/nycklar i ST
-            if (symbolTable.get(word) > symbolTable.get(max)) // Om värdet associerat med "iterable index" är större än maximum
+            if (symbolTable.get(word) > symbolTable.get(max)) { // Om värdet associerat med "iterable index" är större än maximum
                 max = word;                                   // Ersätt då värdet för max med detta
         }
         long stopSearch = System.currentTimeMillis();
@@ -295,4 +295,5 @@ public class BinarySearchSymbolTableTask2<Key extends Comparable<Key>, Value> {
 
         symbolTable = null; // Clean up memory
     }
+
 }
