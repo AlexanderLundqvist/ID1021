@@ -1,6 +1,5 @@
 package Utility;
 
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -58,9 +57,9 @@ public class SymbolGraph {
         
         // ??????
         // inverted index to get string keys in an array
-        keys = new String[symbol_table.size()];
-        for (String name : symbol_table.keys()) {
-            keys[symbol_table.get(name)] = name;
+        keys = new String[symbol_table.size()]; // String array
+        for (String key : symbol_table.keys()) { // For every 
+            keys[symbol_table.get(key)] = key; 
         }
         
         
@@ -71,7 +70,7 @@ public class SymbolGraph {
             String[] substring = reader_graph.nextLine().split(delimiter);
             
             int vertex_A = symbol_table.get(substring[0]); // Gets substring index for inputing as vertex in graph
-            for (int i = 1; i < substring.length; i++) { // Only runs once for current file input
+            for (int i = 1; i < substring.length; i++) { // Adds every string on the line to the first strings adjacency collection (bag)
                 int vertex_B = symbol_table.get(substring[i]);
                 graph.addEdge(vertex_A, vertex_B);
             }

@@ -58,6 +58,23 @@ public class Graph {
         vertices_list[vertex_B].add(vertex_A);
     }
     
+    /**
+     * Get method for returning the amount of vertices in the graph
+     * 
+     * @return amount of vertices
+     */
+    public int getVertices() {
+        return vertices;
+    }
+    
+    /**
+     * Get method for returning the amount of edges in the graph
+     * 
+     * @return amount of edges
+     */
+    public int getEdges() {
+        return edges;
+    }
     
     /**
      * Returns the vertices adjacent to the input vertex.

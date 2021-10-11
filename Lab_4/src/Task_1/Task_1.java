@@ -1,7 +1,11 @@
 package Task_1;
 
 import Utility.Graph;
+import Utility.SymbolGraph;
 import edu.princeton.cs.algs4.ST;
+import edu.princeton.cs.algs4.Stack;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /*********************************** README ************************************
 *
@@ -25,31 +29,24 @@ import edu.princeton.cs.algs4.ST;
 *******************************************************************************/
 
 public class Task_1 {
-    private boolean[] marked;    // marked[v] = is there an s-v path?
-    private int[] edgeTo;        // edgeTo[v] = last edge on s-v path
-    private final int source;         // source vertex
+    private boolean[] marked;       // marked[v] = is there an s-v path?
+    private int[] edgeTo;           // edgeTo[v] = last edge on s-v path
+    private final int source_vertex;       // source vertex 
 
-    /**
-     * Computes a path between {@code source} and every other vertex in graph {@code graph}.
-     * @param graph the graph
-     * @param source the source vertex
-     * @throws IllegalArgumentException unless {@code 0 <= source < V}
-     */
     public Task_1(Graph graph, int source) {
-        this.source = source;
-        edgeTo = new int[graph.V()];
-        marked = new boolean[graph.V()];
-        validateVertex(source);
+        this.source_vertex = source;
+        edgeTo = new int[graph.getVertices()];
+        marked = new boolean[graph.getVertices()];
         depthFirstSearch(graph, source);
     }
 
-    // depth first search from v
-    private void depthFirstSearch(Graph graph, int v) {
-        marked[v] = true;
-        for (int w : graph.adjacentVertices(v)) {
-            if (!marked[w]) {
-                edgeTo[w] = v;
-                depthFirstSearch(graph, w);
+    // depth first search from start_vertex
+    private void depthFirstSearch(Graph graph, int start_vertex) {
+        marked[start_vertex] = true;
+        for (int adjacent_vertex : graph.adjacentVertices(start_vertex)) {
+            if (!marked[adjacent_vertex]) {
+                edgeTo[adjacent_vertex] = start_vertex;
+                depthFirstSearch(graph, adjacent_vertex);
             }
         }
     }
@@ -61,46 +58,55 @@ public class Task_1 {
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public boolean hasPathTo(int v) {
-        validateVertex(v);
         return marked[v];
     }
 
     /**
-     * Returns a path between the source vertex {@code s} and vertex {@code v}, or
+     * Returns a path between the source vertex {@code s} and vertex {@code destination_vertex}, or
      * {@code null} if no such path.
-     * @param  v the vertex
+     * @param  destination_vertex the vertex
      * @return the sequence of vertices on a path between the source vertex
-     *         {@code s} and vertex {@code v}, as an Iterable
-     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     *         {@code s} and vertex {@code destination_vertex}, as an Iterable
+     * @throws IllegalArgumentException unless {@code 0 <= destination_vertex < V}
      */
-    public Iterable<Integer> pathTo(int v) {
-        validateVertex(v);
-        if (!hasPathTo(v)) return null;
+    public Iterable<Integer> pathTo(int destination_vertex) {
+        if (!hasPathTo(destination_vertex)) return null; //
+        
+        //
         Stack<Integer> path = new Stack<Integer>();
-        for (int x = v; x != s; x = edgeTo[x])
-            path.push(x);
-        path.push(s);
+        
+        //
+        for (int x = destination_vertex; x != source_vertex; x = edgeTo[x]) {
+            path.push(x);           
+        }
+        
+        //
+        path.push(source_vertex);
         return path;
     }
-
-    // throw an IllegalArgumentException unless {@code 0 <= v < V}
-    private void validateVertex(int v) {
-        int V = marked.length;
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
-    }
-    
     
     /**
      * Main method with unit testing for the class.
      * @param args takes no input arguments
      */    
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         String PATH = "contiguous-usa.dat"; // Relative path to project root
         String DELIMITER = " ";
         
         
-        //SymbolGraph symbol_graph = new SymbolGraph(PATH, DELIMITER);
+        SymbolGraph symbol_graph = new SymbolGraph(PATH, DELIMITER);
         
+        
+        System.out.println("**************************************************************************");
+        System.out.println("Testing of depth first search in graph based on file " + PATH);
+        System.out.println("Testing of depth first search in graph based on file " + PATH);
+        Scanner input = new Scanner(System.in);
+        System.out.println("Size of array: ");
+            try {
+                size = input.next();
+            } catch (Exception e) {
+                System.out.println("Wrong input!");
+                break;
+
     }
 }
