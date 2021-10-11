@@ -55,14 +55,13 @@ public class SymbolGraph {
                 }
             }
         }
-
+        
+        // ??????
         // inverted index to get string keys in an array
         keys = new String[symbol_table.size()];
         for (String name : symbol_table.keys()) {
             keys[symbol_table.get(name)] = name;
         }
-        // second pass builds the graph by connecting first vertex on each
-        // line to all others
         
         
         graph = new Graph(symbol_table.size());

@@ -27,29 +27,29 @@ import edu.princeton.cs.algs4.ST;
 public class Task_1 {
     private boolean[] marked;    // marked[v] = is there an s-v path?
     private int[] edgeTo;        // edgeTo[v] = last edge on s-v path
-    private final int s;         // source vertex
+    private final int source;         // source vertex
 
     /**
-     * Computes a path between {@code s} and every other vertex in graph {@code G}.
-     * @param G the graph
-     * @param s the source vertex
-     * @throws IllegalArgumentException unless {@code 0 <= s < V}
+     * Computes a path between {@code source} and every other vertex in graph {@code graph}.
+     * @param graph the graph
+     * @param source the source vertex
+     * @throws IllegalArgumentException unless {@code 0 <= source < V}
      */
-    public Task_1(Graph G, int s) {
-        this.s = s;
-        edgeTo = new int[G.V()];
-        marked = new boolean[G.V()];
-        validateVertex(s);
-        dfs(G, s);
+    public Task_1(Graph graph, int source) {
+        this.source = source;
+        edgeTo = new int[graph.V()];
+        marked = new boolean[graph.V()];
+        validateVertex(source);
+        depthFirstSearch(graph, source);
     }
 
     // depth first search from v
-    private void dfs(Graph G, int v) {
+    private void depthFirstSearch(Graph graph, int v) {
         marked[v] = true;
-        for (int w : G.adj(v)) {
+        for (int w : graph.adjacentVertices(v)) {
             if (!marked[w]) {
                 edgeTo[w] = v;
-                dfs(G, w);
+                depthFirstSearch(graph, w);
             }
         }
     }
