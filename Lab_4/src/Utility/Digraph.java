@@ -1,31 +1,27 @@
 package Utility;
 
-import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Bag;
 
 /*********************************** README ************************************
 *
-* Seminar 4 - Graph 
+* Seminar 4 - Digraph
 * @author Alexander Lundqvist
-* Created: 06-10-2021
+* Created: 13-10-2021
 *
 * About this class:
-* This class is an utility class that implements an undirected graph. 
-* It implements an API based on the description in 
-* <a href="https://algs4.cs.princeton.edu/41graph/">Princeton</a>.
-* The class supports operations such as adding edges to the graph, iteration 
-* over vertices vertices_list to a vertex and returning number of edges and vertices.
+* This class is an utility class that implements an directed graph or digraph. 
 * 
-* 
+*
 * Based on:
+* <a href="https://algs4.cs.princeton.edu/42digraph/Digraph.java.html">Link</a>
 * <a href="https://algs4.cs.princeton.edu/41graph/Graph.java.html">Link</a>
 *
 *******************************************************************************/
 
-
-public class Graph {
-    private final int vertices;           // Amount of vertices in the graph
-    private int edges;                    // Amount of edges in the graph
+public class Digraph {
+    private final int vertices; 
+    private int edges;          
     private Bag<Integer>[] vertices_list; // A list of all vertices with their respective connections
     
     /**
@@ -34,7 +30,7 @@ public class Graph {
      * 
      * @param amount_of_vertices 
      */
-    public Graph(int amount_of_vertices) {
+    public Digraph(int amount_of_vertices) {
         this.vertices = amount_of_vertices;
         this.edges = 0;
         
@@ -59,7 +55,7 @@ public class Graph {
         edges++;
         // Adds the vertex number(int) to the collection of adjacent vertices(Bag)
         vertices_list[vertex_A].add(vertex_B);
-        vertices_list[vertex_B].add(vertex_A);
+        // vertices_list[vertex_B].add(vertex_A); Removed for one way realationships
     }
     
     /**
