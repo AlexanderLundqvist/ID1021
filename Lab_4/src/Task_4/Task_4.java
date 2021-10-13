@@ -29,8 +29,8 @@ public class Task_4 {
      * @param args takes no input arguments
      */   
     public static void main(String[] args) throws FileNotFoundException {
-        String PATH = "contiguous-usa.txt"; // Relative path to project root
-        //String PATH = "test.txt"; // Use for testing
+        //String PATH = "contiguous-usa.txt"; // Relative path to project root
+        String PATH = "test.txt"; // Use for testing
         String DELIMITER = " ";
         
         SymbolDigraph symbol_digraph = new SymbolDigraph(PATH, DELIMITER);
@@ -93,5 +93,10 @@ public class Task_4 {
         System.out.println();
         System.out.println();
         System.out.println("**************************************************************************");
+        System.out.println();
+        dfs.printEdge();
+        System.out.println();
+        dfs.printMarked();
+        System.out.println();
     }
 }

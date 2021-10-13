@@ -3,13 +3,13 @@ import edu.princeton.cs.algs4.Stack;
 
 /*********************************** README ************************************
 *
-* Seminar 4 - Depth first search algorithm
+* Seminar 4 - Depth first search
 * @author Alexander Lundqvist
-* Created: 05-10-2021
+* Created: 13-10-2021
 *
 * About this class:
-* This class implements DPS(Depth first search) that can find paths between 
-* specified vertices if there exists one.
+* This class implements DPS(Depth first search) in directed graphs, that can 
+* find paths between specified vertices if there exists one.
 * 
 * Based on:
 * <a href="https://algs4.cs.princeton.edu/41graph/DepthFirstSearch.java.html">Link</a>
@@ -17,8 +17,8 @@ import edu.princeton.cs.algs4.Stack;
 *
 *******************************************************************************/
 
-public class DepthFirstSearch {
-    private boolean[] marked;           // marked[v] = is there an s-v path?
+public class DepthFirstSearchDirected {
+private boolean[] marked;               // marked[v] = is there an s-v path?
     private int[] edgeTo;               // edgeTo[v] = last edge on s-v path
     private final int source_vertex;    // source vertex
     
@@ -28,20 +28,20 @@ public class DepthFirstSearch {
      * @param graph the graph
      * @param source_vertex the vertex we start the search from
      */
-    public DepthFirstSearch(Graph graph, int source_vertex) {
+    public DepthFirstSearchDirected(Digraph digraph, int source_vertex) {
         this.source_vertex = source_vertex;
-        edgeTo = new int[graph.getVertices()];
-        marked = new boolean[graph.getVertices()];
-        dfs(graph, source_vertex);
+        edgeTo = new int[digraph.getVertices()];
+        marked = new boolean[digraph.getVertices()];
+        dfs(digraph, source_vertex);
     }
     
     // depth first search from start_vertex
-    private void dfs(Graph graph, int source_vertex) {
+    private void dfs(Digraph digraph, int source_vertex) {
         marked[source_vertex] = true;  // The vertex we start at will be marked as visited
-        for (int adjacent_vertex : graph.adjacentVertices(source_vertex)) { // For every adjacent element in the input vertex collection
+        for (int adjacent_vertex : digraph.adjacentVertices(source_vertex)) { // For every adjacent element in the input vertex collection
             if (!marked[adjacent_vertex]) { // If we haven't visited a vertex
                 edgeTo[adjacent_vertex] = source_vertex; // 
-                dfs(graph, adjacent_vertex); // Recurse deeper into the graph
+                dfs(digraph, adjacent_vertex); // Recurse deeper into the graph
             }
         }
     }

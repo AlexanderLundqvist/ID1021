@@ -90,7 +90,10 @@ public class Task_1 {
         System.out.println();
         System.out.println();
         System.out.println("**************************************************************************");
+        System.out.println();
         dfs.printEdge();
+        System.out.println();
         dfs.printMarked();
+        System.out.println();
     }
 }

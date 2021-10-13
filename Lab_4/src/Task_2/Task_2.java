@@ -91,5 +91,10 @@ public class Task_2 {
         System.out.println();
         System.out.println();
         System.out.println("**************************************************************************");
+        System.out.println();
+        bfs.printEdge();
+        System.out.println();
+        bfs.printMarked();
+        System.out.println();
     }
 }
