@@ -226,11 +226,19 @@ public class SymbolTable<Key extends Comparable<Key>, Value> {
      */
     public Iterable<Key> keys(Key lo, Key hi) {
         Queue<Key> queue = new Queue<Key>(); // Implementeras med en fifo kö
-        if (lo.compareTo(hi) > 0) return queue; // negativt intervall
+        if (lo.compareTo(hi) > 0) return queue;
         for (int i = rank(lo); i < rank(hi); i++) 
             queue.enqueue(keys[i]); 
         if (contains(hi)) queue.enqueue(keys[rank(hi)]);
         return queue;
+    }
+    
+    // For debugging
+    public void toStringST() {
+        System.out.println("ST content:");
+        for (int i = 0; i < keys.length; i++) {
+            System.out.println("[Key: " + keys[i] + ", Value: " + values[i] + "]");
+        }
     }
     
     public static void main(String[] args) {

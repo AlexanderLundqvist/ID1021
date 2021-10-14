@@ -72,7 +72,6 @@ private boolean[] marked;               // marked[v] = is there an s-v path?
         
         // Start at destination vertex, as long as it is not at the same index 
         // as source, push it to the stack. 
-        //
         for (int x = destination_vertex; x != source_vertex; x = edgeTo[x]) {
             path.push(x);           
         }

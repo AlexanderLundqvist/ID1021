@@ -91,6 +91,9 @@ public class Task_2 {
         System.out.println();
         System.out.println();
         System.out.println("**************************************************************************");
+        
+        // Debugging
+        symbol_graph.toStringST();
         System.out.println();
         bfs.printEdge();
         System.out.println();

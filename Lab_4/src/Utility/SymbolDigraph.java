@@ -114,6 +114,10 @@ public class SymbolDigraph {
         return symbol_table.get(key);
     }
     
+    public void toStringST() {
+        symbol_table.toStringST();
+    }
+    
     /**
      * Main method with unit testing for the class.
      * 
