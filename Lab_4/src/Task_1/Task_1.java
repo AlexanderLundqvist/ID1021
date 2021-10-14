@@ -77,9 +77,13 @@ public class Task_1 {
         System.out.println();
         if(dfs.hasPathTo(end_index)) {
            System.out.println("The given vertices has the following path:\n");
-            for(int index : dfs.pathTo(end_index)) {
-                if(index == end_index) { // For the last vertex
-                    System.out.print(symbol_graph.nameAt(index));
+           // Here we go trough the stack, Since LIFO, first out will be source vertex
+           // and then we continue till we get to the destination index
+           for(int index : dfs.pathTo(end_index)) {
+                if(index == end_index) { // For the last vertex so we don't get extra arrow
+                    // Get the vertex name from the keys array or rather the actual key from the 
+                    // ST. 
+                    System.out.print(symbol_graph.nameAt(index)); 
                 }
                 else {
                     System.out.print(symbol_graph.nameAt(index) + " -> ");

@@ -43,23 +43,28 @@ public class SymbolGraph {
         // Reads file line for line and builds the symbol table that associates
         // each unique substring with an index.
         while (reader_ST.hasNextLine()) {
-            // int ST_index = 0; // Index for the substring in the ST
             
-            // Split each line into substrings
+            // Split each line into substrings, in this case a line will be
+            // AB CD -> {[AB],[CD]}
             String[] substring = reader_ST.nextLine().split(delimiter);
             // Check each substring and if unique/not in ST, then put it into the ST
             for (int i = 0; i < substring.length; i++) {
-                if (!symbol_table.contains(substring[i])) {
-                    symbol_table.put(substring[i], symbol_table.size()); // size() instead of ST_index++
+                if (!symbol_table.contains(substring[i])) { // If st doesnt contain the string/name/vertex
+                    // size() instead of ST_index++, since ST size is initially 0 and incremented every put
+                    symbol_table.put(substring[i], symbol_table.size());  
                 }
             }
         }
         
         // Creates a string array where we invert the symbol table. Only for nameOf().
+        // Princeton class might use it more, but here it is only implemented so we don't have to
+        // call get function all the time.
         // E.x {KEY: SomeString, VAL: SomeInteger} -> keys[SomeInteger] = SomeString
         keys = new String[symbol_table.size()]; // String array
-        for (String key : symbol_table.keys()) { // For every key in the ST, add to new key list
-            keys[symbol_table.get(key)] = key; 
+        for (String key : symbol_table.keys()) { // For every key/vertex in the ST, add to new key list
+            // Get normaly associated with value, but here value is just the index of the vertex
+            // We place the ST key in the array at the index that corresponds to the value of the key
+            keys[symbol_table.get(key)] = key;
         }
         
         graph = new Graph(symbol_table.size()); // Initialize the underlying graph
@@ -117,6 +122,7 @@ public class SymbolGraph {
         return symbol_table.get(key);
     }
     
+    // For debugging
     public void toStringST() {
         symbol_table.toStringST();
     }

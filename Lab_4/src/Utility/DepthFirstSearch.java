@@ -35,13 +35,29 @@ public class DepthFirstSearch {
         dfs(graph, source_vertex);
     }
     
-    // depth first search from start_vertex
-    private void dfs(Graph graph, int source_vertex) {
-        marked[source_vertex] = true;  // The vertex we start at will be marked as visited
-        for (int adjacent_vertex : graph.adjacentVertices(source_vertex)) { // For every adjacent element in the input vertex collection
-            if (!marked[adjacent_vertex]) { // If we haven't visited a vertex
-                edgeTo[adjacent_vertex] = source_vertex; // 
-                dfs(graph, adjacent_vertex); // Recurse deeper into the graph
+    // The idea is that we look in starting vertex bag, pick first item
+    // then look in that items bag and so on untill it stops, then we go back
+    // and continue with next item
+    // Test B1 - B4
+    private void dfs(Graph graph, int vertex) {
+        // The vertex we start at will be marked as visited
+        marked[vertex] = true;
+        
+        // For every adjacent element in the input vertex collection
+        // if a vertex in the collection is already visited, we do nothing
+        for (int adjacent_vertex : graph.adjacentVertices(vertex)) {
+            
+            // If we haven't visited a vertex
+            if (!marked[adjacent_vertex]) {
+                
+                // Mark that there is a path between the input vertex and the
+                // adjacent vertex.
+                // This is done by writing the index of the previous vertex 
+                // in the edgeTo array at the current adjacent_vertex index 
+                edgeTo[adjacent_vertex] = vertex;
+                
+                // Recurse deeper into the graph by examining the adjacent vertex      
+                dfs(graph, adjacent_vertex); 
             }
         }
     }
@@ -67,11 +83,14 @@ public class DepthFirstSearch {
     public Iterable<Integer> pathTo(int destination_vertex) {
         if (!hasPathTo(destination_vertex)) return null; // No path, do nothing
         
-        // Create a new LIFO Stack
+        // Create a new LIFO Stack to hold the path
+        // Could also just have been an array in this case, but stack fits better
+        // for abstract datatypes
         Stack<Integer> path = new Stack<Integer>();
         
         // Start at destination vertex, as long as it is not at the same index 
-        // as source, push it to the stack. 
+        // as source, push it to the stack
+        // Then x is set to the previous vertex in the edgeTO ARRAY  
         for (int x = destination_vertex; x != source_vertex; x = edgeTo[x]) {
             path.push(x);           
         }
