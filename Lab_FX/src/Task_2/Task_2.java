@@ -12,6 +12,17 @@ package Task_2;
 * Based on:
 * <a href="">Link</a>
 *
+* i) Compare/evaluate the execution time of two versions of Quicksort with 
+* cutoff to Insertionsort. The versions should use shuffling of the input vs. 
+* median-of-three without shuffling. The input should be integer values. 
+* Use input that is sorted and random. Vary the input sizes from 100 to 1000000 
+* elements with integer values uniformly distributed in the interval [0, 100000] 
+* and [0,100] respectively. Make sure your results are statistically 
+* significant. The program should take the number of integers N in the input 
+* as parameter by the command line arguments (argv). 
+* ii) You should be able to show (think graphs) and explain your results. 
+* For this experiment you need to use a random number generator and run experiments.
+* 
 *******************************************************************************/
 
 public class Task_2 {

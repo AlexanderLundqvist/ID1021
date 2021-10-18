@@ -4,7 +4,7 @@ package Utility;
 *
 * Title placeholder
 * @author Alexander Lundqvist
-* Created: 07-10-2021
+* Created: 15-10-2021
 *
 * About this class:
 *
@@ -14,10 +14,10 @@ package Utility;
 *
 *******************************************************************************/
 
-public class Filler {
+public class DijkstraShortestPath {
     
     // Default constructor
-    public Filler() {
+    public DijkstraShortestPath() {
     }
 
     /**
