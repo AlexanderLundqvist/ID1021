@@ -2,7 +2,7 @@ package Task_2;
 
 /*********************************** README ************************************
 *
-* Title placeholder
+* Task 2 - 
 * @author Alexander Lundqvist
 * Created: 07-10-2021
 *
@@ -30,7 +30,11 @@ public class Task_2 {
     // Default constructor
     public Task_2() {
     }
-
+    
+    public void quickSort() {
+        
+    }
+    
     /**
      * Main method with unit testing for the class.
      * @param args takes no input arguments

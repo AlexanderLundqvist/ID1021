@@ -1,16 +1,19 @@
 package Task_6;
 
+import java.util.Scanner;
+import Utility.*;
+import java.io.FileNotFoundException;
+
 /*********************************** README ************************************
 *
-* Title placeholder
+* Seminar FX - Task 6: Shortest path in weighted digraph
 * @author Alexander Lundqvist
 * Created: 14-10-2021
 *
 * About this class:
+* This class finds the shortest path between two vertices with the option of a 
+* intermediate vertex. 
 *
-*
-* Based on:
-* <a href="">Link</a>
 *
 * Implement a program which allows the user to find the shortest path between 
 * two nodes in a directed graph with edge weights, possibly passing through a 
@@ -32,11 +35,58 @@ package Task_6;
 
 public class Task_6 {
     
-    // Default constructor
-    public Task_6() {
-    }
-    
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         
+        String PATH = "NYCTest.txt";
+        String DELIMITER = " ";
+        
+        EdgeWeightedDigraph graph = new EdgeWeightedDigraph(PATH, DELIMITER);
+        
+        System.out.println("**************************************************************************");
+        System.out.println("Testing of depth first search in graph based on file " + PATH);
+        System.out.println("\nInput vertices that you want to find path between!");
+        Scanner input = new Scanner(System.in);
+        String vertex_A;
+        String vertex_B;
+        String vertex_C;
+        
+        // Input vertices
+        System.out.println("\nStarting vertex: ");
+        try {
+            vertex_A = input.nextLine();
+            if (!graph.contains(vertex_A)) {
+                System.out.println("Vertex doesn't exist!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Error in input!");
+            return;
+        }
+        
+        System.out.println("\nIntermediate  vertex: ");
+        try {
+            vertex_B = input.nextLine();
+            if (!graph.contains(vertex_B)) {
+                System.out.println("Vertex doesn't exist!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Error in input!");
+            return;
+        }
+        
+        System.out.println("\nEnd vertex: ");
+        try {
+            vertex_C = input.nextLine();
+            if (!graph.contains(vertex_C)) {
+                System.out.println("Vertex doesn't exist!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Error in input!");
+            return;
+        }
+        
+        // Find path
     }
 }
