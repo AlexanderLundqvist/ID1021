@@ -1,13 +1,17 @@
 package Task_2;
 
+import Utility.*;
+import java.util.Scanner;
+
 /*********************************** README ************************************
 *
-* Task 2 - 
+* Task 2 - Quicksort with cutoff
 * @author Alexander Lundqvist
 * Created: 07-10-2021
 *
 * About this class:
-*
+* This class uses two versions of Quicksort with cutoff to Insertionsort and 
+* randomized input to measure execution time of the algorithms.
 *
 * Based on:
 * <a href="">Link</a>
@@ -27,12 +31,18 @@ package Task_2;
 
 public class Task_2 {
     
-    // Default constructor
-    public Task_2() {
-    }
-    
-    public void quickSort() {
-        
+    /**
+     * Makes a copy of the original array.
+     * 
+     * @param sourceArray is the array that will be duplicated
+     * @return the duplicated array
+     */
+    private static int[] copyArray(int[] sourceArray) {
+        int[] copyArray = new int[sourceArray.length];
+        for (int i = 0; i < sourceArray.length; i++) {
+            copyArray[i] = sourceArray[i];
+        }
+        return copyArray;
     }
     
     /**
@@ -40,6 +50,29 @@ public class Task_2 {
      * @param args takes no input arguments
      */    
     public static void main(String[] args) {
+        // Testing for hardcoded variables
+        int[] test = {2, 54, 7, 6, 345, 11, 0, 5, 13, 107, 1}; 
         
+        long start1 = System.currentTimeMillis();
+        quickSort(test);
+        long end1 = System.currentTimeMillis();
+        long time1 = end1 - start1;
+        
+        
+        // Testing with user input
+        Scanner input = new Scanner(System.in);
+        int size;
+        int max;
+        Long seed;
+        
+        System.out.println("Input desired size of array: ");
+        size = input.nextInt();
+        int[] array1 = new int[size];
+        
+        System.out.println("Input max value of individual element: ");
+        max = input.nextInt();
+        
+        System.out.println("Input desired size of array: ");
+        seed = input.nextLong();
     }
 }

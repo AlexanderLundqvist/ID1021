@@ -44,6 +44,21 @@ public class RandomKeyValue {
     }
     
     /**
+     * Creates an array populated with random integers in a specified interval
+     * with input parameter.
+     * @param maxValue the uppr bound of the number
+     * @param amount the amount
+     * @return the array
+     */
+    public int[] randomizeInt(int maxValue, int amount) {
+        int[] randomizedIntArray = new int[amount];
+        for(int i = 0; i < amount; i++) {
+            randomizedIntArray[i] = random.nextInt(maxValue);
+        }
+        return randomizedIntArray;
+    }
+    
+    /**
      * Creates an array populated with random strings(actually chars) in a 
      * specified interval.
      * @return the array
