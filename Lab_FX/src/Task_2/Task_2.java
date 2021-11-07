@@ -17,12 +17,16 @@ import java.util.Scanner;
 * <a href="">Link</a>
 *
 * i) Compare/evaluate the execution time of two versions of Quicksort with 
-* cutoff to Insertionsort. The versions should use shuffling of the input vs. 
-* median-of-three without shuffling. The input should be integer values. 
-* Use input that is sorted and random. Vary the input sizes from 100 to 1000000 
+* cutoff to Insertionsort. 
+* The versions should use shuffling of the input vs. 
+* median-of-three without shuffling. 
+* The input should be integer values. 
+* Use input that is sorted and random. 
+* Vary the input sizes from 100 to 1000000 
 * elements with integer values uniformly distributed in the interval [0, 100000] 
 * and [0,100] respectively. Make sure your results are statistically 
-* significant. The program should take the number of integers N in the input 
+* significant. 
+* The program should take the number of integers N in the input 
 * as parameter by the command line arguments (argv). 
 * ii) You should be able to show (think graphs) and explain your results. 
 * For this experiment you need to use a random number generator and run experiments.
@@ -33,7 +37,6 @@ public class Task_2 {
     
     /**
      * Makes a copy of the original array.
-     * 
      * @param sourceArray is the array that will be duplicated
      * @return the duplicated array
      */
@@ -50,29 +53,39 @@ public class Task_2 {
      * @param args takes no input arguments
      */    
     public static void main(String[] args) {
-        // Testing for hardcoded variables
-        int[] test = {2, 54, 7, 6, 345, 11, 0, 5, 13, 107, 1}; 
+//        Quicksort sorting = new Quicksort(0);
         
-        long start1 = System.currentTimeMillis();
-        quickSort(test);
-        long end1 = System.currentTimeMillis();
-        long time1 = end1 - start1;
+        // testing for randomized array
+//        int[] test = {2, 54, 7, 6, 345, 11, 0, 5, 13, 107, 1}; 
+        
+//        long start = System.currentTimeMillis();
+//        sorting.quickSortMedian(test);
+//        long end = System.currentTimeMillis();
+//        long time = end - start;
         
         
         // Testing with user input
         Scanner input = new Scanner(System.in);
+        int cutoff = 8;
         int size;
         int max;
         Long seed;
+        
+        System.out.println("Testing quicksort with shuffling\n");
         
         System.out.println("Input desired size of array: ");
         size = input.nextInt();
         int[] array1 = new int[size];
         
-        System.out.println("Input max value of individual element: ");
+//        System.out.println("Input desired cutoff value: ");
+//        cutoff = input.nextInt();
+        
+        System.out.println("Input randomizer seed: ");
+        seed = input.nextLong();
+        
+        System.out.println("Input max value of any element: ");
         max = input.nextInt();
         
-        System.out.println("Input desired size of array: ");
-        seed = input.nextLong();
+        
     }
 }

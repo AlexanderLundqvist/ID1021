@@ -2,12 +2,13 @@ package Task_4;
 
 /*********************************** README ************************************
 *
-* Seminar FX - k:th most common wird
+* Seminar FX - Task 4: k:th most common word
 * @author Alexander Lundqvist
 * Created: 07-10-2021
 *
 * About this class:
-*
+* This class lets the user find the words with a certain frequency in a text file.
+* It does this by utilizing hashing of the specified text file leipzig1m.txt.
 *
 * Based on:
 * <a href="">Link</a>
@@ -23,15 +24,12 @@ package Task_4;
 
 public class Task_4 {
     
-    // Default constructor
-    public Task_4() {
-    }
-
     /**
      * Main method with unit testing for the class.
      * @param args takes no input arguments
      */    
     public static void main(String[] args) {
-        
+        String PATH = "";
+        String DELIMITER = "";
     }
 }

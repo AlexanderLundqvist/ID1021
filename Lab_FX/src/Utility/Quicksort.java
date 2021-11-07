@@ -1,5 +1,7 @@
 package Utility;
 
+import edu.princeton.cs.algs4.StdRandom;
+
 /*********************************** README ************************************
 *
 * Seminar FX - Quicksort
@@ -16,28 +18,49 @@ package Utility;
 *******************************************************************************/
 
 public class Quicksort {
+    private final int CUTOFF;
     
     /**
-     * The sorting function for the API. Provides easy function call for the client
-     * Relies on auxiliary functions.
-     * 
-     * @param array is the array to be sorted
+     * Creates an instance of the quicksort object.
      * @param cutoff is the cutoff value
      */
-    public static void quickSortMedian(int[] array, int cutoff) {
+    public Quicksort(int cutoff) {
+        this.CUTOFF = cutoff;
+    }
+    
+    /**
+     * The quicksort that uses median-of-three partitioning.
+     * @param array is the array to be sorted
+     */
+    public void quickSortMedian(int[] array) {
+        sortMedian(array, 0, array.length-1);
+    }
+    
+    /**
+     * The quicksort that uses shuffling of the input
+     * @param array 
+     */
+    public void quickSortShuffle(int[] array) {
+        StdRandom.shuffle(array);
         sort(array, 0, array.length-1);
-    } 
+    }
     
     /**
      * Sorts the array recursivly by partitioning the array around a
-     * pivot/partitioning element.
-     * 
+     * pivot/partitioning element and also using the median-of-three
+     * partitioning method.
      * @param array is the array to be sorted
      * @param low_index is the low index of the array
      * @param high_index is the high index of the array
      */
-    private static void sort(int[] array, int low_index, int high_index) {
+    private void sortMedian(int[] array, int low_index, int high_index) {
         if (high_index <= low_index) return; // Base case for recursive function
+        
+        // Check if the subarray is the desired size for cutting of to insertion sort
+        if (high_index <= low_index + CUTOFF) {
+            insertionsort(array, low_index, high_index + 1);
+            return;
+        }
         
         // Creating a median of three as partitioning element
         int mid_index = low_index + (high_index - low_index + 1)/2;
@@ -48,22 +71,45 @@ public class Quicksort {
         int partitioning_index = partition(array, low_index, high_index);
         
         // Call the function again for each subarray
+        sortMedian(array, low_index, partitioning_index-1);
+        sortMedian(array, partitioning_index+1, high_index);
+        
+    }
+    
+    /**
+     * Sorts the array recursivly by partitioning the array around a
+     * pivot/partitioning element.
+     * @param array is the array to be sorted
+     * @param low_index is the low index of the array
+     * @param high_index is the high index of the array
+     */
+    private void sort(int[] array, int low_index, int high_index) {
+        if (high_index <= low_index) return; // Base case for recursive function
+        
+        // Check if the subarray is the desired size for cutting of to insertion sort
+        if (high_index <= low_index + CUTOFF) {
+            insertionsort(array, low_index, high_index + 1);
+            return;
+        }
+        
+        // Create the partitioning element that will divide the array
+        int partitioning_index = partition(array, low_index, high_index);
+        
+        // Call the function again for each subarray
         sort(array, low_index, partitioning_index-1);
         sort(array, partitioning_index+1, high_index);
-        
     }
     
     /**
      * Partitions the input array into two arrays with one containing elements
      * less than the partitioning element and one containing elements greater
      * than the partitioning element.
-     * 
      * @param array is the array to be sorted
      * @param low_index is the low index of the array
      * @param high_index is the high index of the array
      * @return the new partitioning element
      */
-    private static int partition(int[] array, int low_index, int high_index) {
+    private int partition(int[] array, int low_index, int high_index) {
         int i = low_index;
         int j = high_index + 1;
         int partitioning_element = array[low_index];
@@ -89,19 +135,18 @@ public class Quicksort {
     }
     
     /**
-     * Helper function for easier understanding of sorting code.
      * Swaps place with two elements in the array. 
      */
-    private static void swap(int[] array, int i, int j) {
+    private void swap(int[] array, int i, int j) {
         int swap = array[i];
         array[i] = array[j];
         array[j] = swap;
     }
     
     /**
-     * Helper function to find the median between 3 elements
+     * Helper function to find the median between 3 elements in a subarray
      */
-    private static int median(int[] array, int low_index, int mid_index, int high_index) {
+    private int median(int[] array, int low_index, int mid_index, int high_index) {
         int low = array[low_index];
         int mid = array[mid_index];
         int high = array[high_index];
@@ -117,9 +162,39 @@ public class Quicksort {
     }
     
     /**
+     * Helper method for the main sorting methods. Insertion sort
+     * for the cutoff.
+     * @param array the array to be sorted
+     * @param low_index the low index of array
+     * @param high_index the high index of array  
+     */
+    private void insertionsort(int[] array, int low_index, int high_index) {
+        for (int i = low_index; i < high_index; i++) {
+            for (int j = i; j > 0; j--) {
+                if (array[j] < array[j-1]) {
+                    swap(array, j, j-1);
+                } 
+                else {
+                    break;
+                }
+            }
+        }    
+    }
+    
+    /**
+     * Checks if the array is sorted.
+     * @param array the array
+     * @return false if not sorted
+     */
+    public boolean isSorted(int[] array) {
+        for (int i = 1; i < array.length; i++)
+            if (array[i] < array[i-1]) return false;
+        return true;
+    }
+    
+    /**
      * Auxiliary function that formats the array into a readable format with
      * formatting specified in the lab pm.
-     * 
      * @param array is the array to be sorted
      */
     public static void toString(int[] array) {
@@ -136,6 +211,34 @@ public class Quicksort {
     }
     
     public static void main(String[] args) {
+        int[] array1 = {5,3,14,2,66,7,8,76,99,123,0,23,91,60,18,37,8};
+        int[] array2 = {5,3,14,2,66,7,8,76,99,123,0,23,91,60,18,37,8};
+
         
+        Quicksort test = new Quicksort(3);
+        
+        System.out.println("Before sorting");
+        test.toString(array1);
+        
+        test.quickSortMedian(array1);
+        
+        System.out.println("After sorting");
+        if (test.isSorted(array1)) test.toString(array1);
+        else System.out.println("Not sorted!");
+        test.toString(array1);
+
+        
+        System.out.println();
+        
+        System.out.println("Before sorting");
+        test.toString(array2);
+        
+        test.quickSortShuffle(array2);
+        
+        System.out.println("After sorting");
+        if (test.isSorted(array2)) test.toString(array2);
+        else System.out.println("Not sorted!");
+        test.toString(array2);
+
     }
 }
