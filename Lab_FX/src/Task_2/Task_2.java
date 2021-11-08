@@ -49,6 +49,19 @@ public class Task_2 {
     }
     
     /**
+     * Creates an array sorted in ascending order where the numbers correspond 
+     * to the array index. I.e 1,2,3...n.
+     * @param size the size of the array
+     * @return the sorted array
+     */
+    private static int[] populate(int size) {
+        int[] sortedArray = new int[size];
+        for (int i = 1; i < size - 1; i++)
+            sortedArray[i] = i;
+        return sortedArray;
+    }
+    
+    /**
      * Main method with unit testing for the class.
      * @param args takes no input arguments
      */    
@@ -66,7 +79,7 @@ public class Task_2 {
         
         // Testing with user input
         Scanner input = new Scanner(System.in);
-        int cutoff = 8;
+        int cutoff = 10;
         int size;
         int max;
         Long seed;
@@ -75,7 +88,8 @@ public class Task_2 {
         
         System.out.println("Input desired size of array: ");
         size = input.nextInt();
-        int[] array1 = new int[size];
+        int[] unsortedArray = new int[size];
+        int[] sortedArray = populate(size);
         
 //        System.out.println("Input desired cutoff value: ");
 //        cutoff = input.nextInt();
@@ -86,6 +100,23 @@ public class Task_2 {
         System.out.println("Input max value of any element: ");
         max = input.nextInt();
         
+        RandomKeyValue randomizer = new RandomKeyValue(size, seed);
+        unsortedArray = randomizer.randomizeInt(max, size);
         
+        Quicksort sorting = new Quicksort(10);
+        
+        long start1 = System.currentTimeMillis();
+        sorting.quickSortMedian(unsortedArray);
+        long end1 = System.currentTimeMillis();
+        long time1 = end1 - start1;
+
+        long start2 = System.currentTimeMillis();
+        sorting.quickSortShuffle(sortedArray);
+        long end2 = System.currentTimeMillis();
+        long time2 = end2 - start2;
+        
+        System.out.println();
+        System.out.println("Input max value of any element: " + time1);
+        System.out.println("Input max value of any element: " + time2);
     }
 }
