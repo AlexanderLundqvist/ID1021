@@ -109,6 +109,7 @@ public class Task_4 {
         
         // Get the keys and values for sorting
         Object[] temp = hashTable.getKeys();
+        String[] words = new String[temp.length];
         for (int i = 0; i < temp.length; i++) {
             words[i]  = (String) temp[i];
         }
