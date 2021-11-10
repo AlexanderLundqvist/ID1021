@@ -16,13 +16,12 @@ import Utility.*;
 *******************************************************************************/
 
 public class Task_3 {
-    private final int amount;
+
     private Pair[] pairs;
     private int size;
     
     // Default constructor
     public Task_3(int amount) {
-        this.amount = amount;
         this.pairs = new Pair[amount];
         this.size = 0;
     }

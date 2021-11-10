@@ -1,6 +1,12 @@
 package Task_4;
 
+import Utility.LinearProbingHashST;
+import Utility.Pair;
+import Utility.Quicksort;
 import Utility.SequentialSearchST;
+import edu.princeton.cs.algs4.Queue;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /*********************************** README ************************************
@@ -10,11 +16,9 @@ import java.util.Scanner;
 * Created: 07-10-2021
 *
 * About this class:
-* This class implements a hash table with separate chaining. It is primarily used
-* for finding frequencies of specified words in a given text file. 
-*
-* Based on:
-* <a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/SeparateChainingHashST.java.html">Link</a>
+* This class reads a textfile and and counts the frequency of every unique word.
+* It then lets the user ask questions such as "Which is the k:th most common word"
+* and "Which are the k:th to the k+n:th most common words".
 *
 * Implement a program which takes as input a text file and allows the user to 
 * repeatedly ask questions: 
@@ -25,51 +29,115 @@ import java.util.Scanner;
 * 
 *******************************************************************************/
 
-public class Task_4<Key, Value> {
-    private static final int DEFAULT_CAPACITY = 4;          // Default capacity
-    private int amountOfPairs;                              // number of key-value pairs
-    private int tableSize;                                  // hash table size
-    private SequentialSearchST<Key, Value>[] symbolTables;  // array of linked-list symbol tables    
+public class Task_4 {
     
+    /**
+     * Insertion sort on two arrays
+     * @param strings the array
+     * @param integers the array 
+     */
+    public static void sort(String[] strings, Integer[] integers) {
+        for (int i = 0; i < integers.length; i++) {
+            for (int j = i; j > 0; j--) {
+                if (integers[j].intValue() < integers[j-1].intValue()) {
+                    swap(strings, integers, j, j-1);
+                } 
+                else {
+                    break;
+                }
+            }
+        }
+    }
     
-    public Task_4() {
+    /**
+     * Swaps places between two indexes in two arrays simultaneously
+     * @param strings the array
+     * @param integers the array
+     * @param i the index
+     * @param j the index
+     */
+    public static void swap(String[] strings, Integer[] integers, int i, int j) {
+        int temp = integers[i];
+        integers[i] = integers[j];
+        integers[j] = temp;
         
+        String tempString = strings[i];
+        strings[i] = strings[j];
+        strings[j] = tempString;
     }
     
     /**
      * Main method with unit testing for the class.
      * @param args takes no input arguments
      */    
-    public static void main(String[] args) {
-        Task_4 hashTable = new Task_4();
-
-        
-        // Simple test. The frequencies in test.txt has been verified with other
-        // software.
+    public static void main(String[] args) throws FileNotFoundException {
+        // Test with reduced file
+        // Verified with other software
+        // 1:st common word = the (25)
+        // 4:th common word = to (14)
+        // 7th common word = said (6)
         String PATH = "test.txt";
-        String DELIMITER = " ";
         
-        // Find 3 different frequencies
-        //
-        //
-        //
+        // Execute with correct file
+        // String PATH = "leipzig1m.txt";
+        Scanner reader = new Scanner(new File(PATH));
+        LinearProbingHashST<String, Integer> hashTable = new LinearProbingHashST<>();
         
+        int minlen           = 0;
+        int distinct         = 0;
+        int amountOfWords    = 0;
         
-//        String PATH = "test.txt";
-//        String DELIMITER = " ";
-        Scanner input = new Scanner(System.in);
-        int choice;
-        int size = 5;
-        
-        // Infinite loop to examine different frequencies. No error handling.
-        while (true) {
-            System.out.println("Hash table has been constructed!");
-            System.out.println("Hash table size is " + size);
-            System.out.println("Input any positive integer in the interval [1, " +  size + "] to find the k:th most common word");
-            System.out.println("");
-            choice = input.nextInt();
-            //System.out.println("The " + choice + " most common word is: " + souhashTable.find(choice));
+        // Build the hash table
+        long start = System.nanoTime();
+        while (reader.hasNext()) {
+            String word = reader.next().toLowerCase();
+            if (hashTable.contains(word)) {
+                hashTable.put(word, (hashTable.get(word) + 1));
+                amountOfWords++;
+            }
+            else {
+                hashTable.put(word, 1);
+                amountOfWords++;
+                distinct++;
+            }
         }
         
+        // Get the keys and values for sorting
+        String[] words = (String[]) hashTable.getKeys();
+        Integer[] frequencies = hashTable.getValues();
+        sort(words, frequencies);
+        
+        long end = System.nanoTime();
+        System.out.println("Time to build index = " + (end-start));
+        
+        // Continous loop that lets the user find frequencies
+        Scanner input = new Scanner(System.in);
+        int run = 1;
+        while (run != 0) {
+            int choice;
+            System.out.println("The table has " + distinct + " unique words");
+            System.out.println("1 for single word, 2 for multiple words");
+            choice = input.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter the k:th most common word of you choice");
+                    int k = input.nextInt();
+                    System.out.println("The " + k + ":th most common word is " +  words[words.length - k]); // Due to ascending order in array
+                    System.out.println("\nEnter 0 to end program");
+                    run = input.nextInt();
+                    break;
+                    
+                case 2:
+                    System.out.println("Enter the k:th to k+n:th most common words of you choice");
+                    int kth = input.nextInt();
+                    int knth = input.nextInt();
+                    for (int i = kth; kth < knth; kth++) {
+                        // PRint
+                    }
+                    System.out.println("\nEnter 0 to end program");
+                    run = input.nextInt();
+                    break;
+            }
+        }
     }
 }
