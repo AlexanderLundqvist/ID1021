@@ -13,9 +13,6 @@ import java.util.Scanner;
 * This class uses two versions of Quicksort with cutoff to Insertionsort and 
 * randomized input to measure execution time of the algorithms.
 *
-* Based on:
-* <a href="">Link</a>
-*
 * i) Compare/evaluate the execution time of two versions of Quicksort with 
 * cutoff to Insertionsort. 
 * The versions should use shuffling of the input vs. 
@@ -82,21 +79,22 @@ public class Task_2 {
         int cutoff = 10;
         int size;
         int max;
-        Long seed;
-        
-        System.out.println("Testing quicksort with shuffling\n");
+        Long seed = 100L;
         
         System.out.println("Input desired size of array: ");
         size = input.nextInt();
         int[] unsortedArray = new int[size];
         int[] sortedArray = populate(size);
         
+        // Disable the following for consistend testing
+        
 //        System.out.println("Input desired cutoff value: ");
 //        cutoff = input.nextInt();
-        
-        System.out.println("Input randomizer seed: ");
-        seed = input.nextLong();
-        
+//        System.out.println("Input randomizer seed: ");
+//        seed = input.nextLong();
+
+        // End of disable
+
         System.out.println("Input max value of any element: ");
         max = input.nextInt();
         
@@ -105,18 +103,20 @@ public class Task_2 {
         
         Quicksort sorting = new Quicksort(10);
         
-        long start1 = System.currentTimeMillis();
+        long start1 = System.nanoTime();
         sorting.quickSortMedian(unsortedArray);
-        long end1 = System.currentTimeMillis();
+        long end1 = System.nanoTime();
         long time1 = end1 - start1;
 
-        long start2 = System.currentTimeMillis();
+        long start2 = System.nanoTime();
         sorting.quickSortShuffle(sortedArray);
-        long end2 = System.currentTimeMillis();
+        long end2 = System.nanoTime();
         long time2 = end2 - start2;
         
         System.out.println();
-        System.out.println("Input max value of any element: " + time1);
-        System.out.println("Input max value of any element: " + time2);
+        System.out.println("************** Execution times **************");
+        System.out.println("Median-of-three: " + time1);
+        System.out.println("Shuffled input: " + time2);
+        System.out.println("*********************************************");
     }
 }

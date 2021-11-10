@@ -1,5 +1,7 @@
 package Task_4;
 
+import Utility.SeparateChainingHashST;
+
 /*********************************** README ************************************
 *
 * Seminar FX - Task 4: k:th most common word
@@ -29,7 +31,10 @@ public class Task_4 {
      * @param args takes no input arguments
      */    
     public static void main(String[] args) {
-        String PATH = "";
-        String DELIMITER = "";
+        String PATH = "test.txt";
+        String DELIMITER = " ";
+        
+        SeparateChainingHashST hashTable = new SeparateChainingHashST();
+        
     }
 }
