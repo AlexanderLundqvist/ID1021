@@ -81,6 +81,7 @@ public class Task_4 {
         // Execute with correct file
         // String PATH = "leipzig1m.txt";
         Scanner reader = new Scanner(new File(PATH));
+        reader.useDelimiter(" +");
         LinearProbingHashST<String, Integer> hashTable = new LinearProbingHashST<>();
         
         int minlen           = 0;
@@ -102,42 +103,54 @@ public class Task_4 {
             }
         }
         
+        System.out.println(distinct);
+        System.out.println(amountOfWords);
+        if(hashTable.contains("the")) System.out.println("HEJ");
+        
         // Get the keys and values for sorting
-        String[] words = (String[]) hashTable.getKeys();
-        Integer[] frequencies = hashTable.getValues();
+        Object[] temp = hashTable.getKeys();
+        for (int i = 0; i < temp.length; i++) {
+            words[i]  = (String) temp[i];
+        }
+        
+        Object[] tempFreq = hashTable.getValues();
+        Integer[] frequencies = new Integer[tempFreq.length];
+        for (int i = 0; i < tempFreq.length; i++) {
+            frequencies[i]  = (Integer) tempFreq[i];
+        }
         sort(words, frequencies);
         
         long end = System.nanoTime();
         System.out.println("Time to build index = " + (end-start));
         
         // Continous loop that lets the user find frequencies
-        Scanner input = new Scanner(System.in);
-        int run = 1;
-        while (run != 0) {
-            int choice;
-            System.out.println("The table has " + distinct + " unique words");
-            System.out.println("1 for single word, 2 for multiple words");
-            choice = input.nextInt();
-            switch (choice) {
-                case 1:
-                    System.out.println("Enter the k:th most common word of you choice");
-                    int k = input.nextInt();
-                    System.out.println("The " + k + ":th most common word is " +  words[words.length - k]); // Due to ascending order in array
-                    System.out.println("\nEnter 0 to end program");
-                    run = input.nextInt();
-                    break;
-                    
-                case 2:
-                    System.out.println("Enter the k:th to k+n:th most common words of you choice");
-                    int kth = input.nextInt();
-                    int knth = input.nextInt();
-                    for (int i = kth; kth < knth; kth++) {
-                        // PRint
-                    }
-                    System.out.println("\nEnter 0 to end program");
-                    run = input.nextInt();
-                    break;
-            }
-        }
+//        Scanner input = new Scanner(System.in);
+//        int run = 1;
+//        while (run != 0) {
+//            int choice;
+//            System.out.println("The table has " + distinct + " unique words");
+//            System.out.println("1 for single word, 2 for multiple words");
+//            choice = input.nextInt();
+//            switch (choice) {
+//                case 1:
+//                    System.out.println("Enter the k:th most common word of you choice");
+//                    int k = input.nextInt();
+//                    System.out.println("The " + k + ":th most common word is " +  words[words.length - k]); // Due to ascending order in array
+//                    System.out.println("\nEnter 0 to end program");
+//                    run = input.nextInt();
+//                    break;
+//                    
+//                case 2:
+//                    System.out.println("Enter the k:th to k+n:th most common words of you choice");
+//                    int kth = input.nextInt();
+//                    int knth = input.nextInt();
+//                    for (int i = kth; kth < knth; kth++) {
+//                        // PRint
+//                    }
+//                    System.out.println("\nEnter 0 to end program");
+//                    run = input.nextInt();
+//                    break;
+//            }
+//        }
     }
 }

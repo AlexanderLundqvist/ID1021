@@ -23,7 +23,8 @@ public class LinearProbingHashST<Key, Value> {
     private int tableSize;      // hash table size                      
     private Key[] keys;         // the keys
     private Value[] values;     // the values
-   
+
+
     /**
      * Initializes an empty symbol table.
      */
