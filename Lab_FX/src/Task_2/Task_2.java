@@ -62,23 +62,12 @@ public class Task_2 {
      * Main method with unit testing for the class.
      * @param args takes no input arguments
      */    
-    public static void main(String[] args) {
-//        Quicksort sorting = new Quicksort(0);
-        
-        // testing for randomized array
-//        int[] test = {2, 54, 7, 6, 345, 11, 0, 5, 13, 107, 1}; 
-        
-//        long start = System.currentTimeMillis();
-//        sorting.quickSortMedian(test);
-//        long end = System.currentTimeMillis();
-//        long time = end - start;
-        
-        
+    public static void main(String[] args) {   
         // Testing with user input
         Scanner input = new Scanner(System.in);
         int cutoff = 10;
         int size;
-        int max;
+        int max = 10000;
         Long seed = 100L;
         
         System.out.println("Input desired size of array: ");
@@ -92,11 +81,10 @@ public class Task_2 {
 //        cutoff = input.nextInt();
 //        System.out.println("Input randomizer seed: ");
 //        seed = input.nextLong();
-
+//        System.out.println("Input max value of any element: ");
+//        max = input.nextInt();
+        
         // End of disable
-
-        System.out.println("Input max value of any element: ");
-        max = input.nextInt();
         
         RandomKeyValue randomizer = new RandomKeyValue(size, seed);
         unsortedArray = randomizer.randomizeInt(max, size);
